@@ -35,39 +35,135 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @keyframes cartBounce{0%,100%{transform:translateX(0) scale(1)}20%{transform:translateX(-4px) scale(1.08)}40%{transform:translateX(4px) scale(1.05)}60%{transform:translateX(-3px) scale(1.03)}80%{transform:translateX(2px) scale(1.01)}}
 
 /* HERO */
-.hero{min-height:100vh;background:linear-gradient(128deg,#F5EDE6 0%,#EDE0D4 42%,#DECCC0 100%);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:110px 40px 60px;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,154,.18) 0%,transparent 70%);pointer-events:none}
-.hero-left{z-index:2;animation:fadeUp .8s .1s ease both}
-.hero-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid rgba(212,168,154,.3);padding:5px 15px;border-radius:30px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:18px}
-h1.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(62px,7.5vw,108px);font-weight:700;line-height:.93;color:var(--deep);letter-spacing:-.02em;margin-bottom:14px}
-h1.hero-title em{font-style:italic}
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  padding:120px 40px 60px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg,#FAF7F4 0%,#F7EFEA 48%,#EEDDD3 100%);
+}
+.hero::after{display:none}
+.hero-left{
+  z-index:2;
+  animation:fadeUp .8s .1s ease both;
+  max-width:560px;
+}
+.hero-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(212,168,154,.26);
+  padding:8px 18px;
+  border-radius:30px;
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:20px;
+  box-shadow:0 8px 24px rgba(44,36,32,.06);
+}
+h1.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(64px,7vw,106px);
+  font-weight:700;
+  line-height:.9;
+  color:var(--deep);
+  letter-spacing:-.03em;
+  margin-bottom:18px;
+}
+h1.hero-title em{
+  display:block;
+  font-style:italic;
+  color:#B88C80;
+}
 .badge-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-.badge-gold{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--gold) 0deg,var(--gold-l) 60deg,var(--gold) 120deg,#9A7010 180deg,var(--gold) 240deg,var(--gold-l) 300deg,var(--gold) 360deg);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(180,140,20,.38);position:relative;flex-shrink:0}
-.badge-gold::before{content:'';position:absolute;inset:7px;border-radius:50%;background:linear-gradient(135deg,#B08010 0%,#DEB030 50%,#906010 100%)}
-.badge-gold span{position:relative;z-index:2;color:#fff;font-family:'DM Sans',sans-serif;line-height:1}
-.badge-pct{font-size:17px;font-weight:800}
-.badge-word{font-size:6px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
-.badge-copy{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300}
-.hero-sub{font-size:14px;line-height:1.8;color:var(--muted);max-width:370px;margin-bottom:30px;font-weight:300}
+.hero-sub{
+  font-size:15px;
+  line-height:1.75;
+  color:#5c504b;
+  max-width:460px;
+  margin-bottom:30px;
+  font-weight:300;
+}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{background:var(--deep);color:var(--white);padding:14px 30px;border-radius:40px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:all .3s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-block}
-.btn-primary:hover{background:var(--rose);transform:translateY(-2px);box-shadow:0 10px 26px rgba(212,168,154,.4)}
-.btn-ghost{border:1.5px solid var(--deep);color:var(--deep);padding:13px 28px;border-radius:40px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:400;transition:all .3s;display:inline-block}
+.btn-primary{
+  background:#1a1a1a;
+  color:#fff;
+  padding:16px 34px;
+  border-radius:50px;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  text-decoration:none;
+  font-weight:600;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  border:none;
+  cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  display:inline-block;
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+}
+.btn-primary:hover{
+  background:#22c55e;
+  transform:translateY(-2px) scale(1.04);
+  box-shadow:0 15px 36px rgba(34,197,94,.36);
+}
+.btn-ghost{
+  border:1.5px solid var(--deep);
+  color:var(--deep);
+  padding:15px 30px;
+  border-radius:50px;
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  font-weight:500;
+  transition:all .3s;
+  display:inline-block;
+  background:rgba(255,255,255,.35);
+}
 .btn-ghost:hover{background:var(--deep);color:var(--white)}
 
 /* hero visual */
-.hero-right{position:relative;z-index:2;display:flex;justify-content:center;animation:fadeUp .8s .3s ease both}
-.hero-img{width:480px;height:560px;background:transparent;}
-.hero-img img{width:100%;height:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 20px 40px rgba(44,36,32,.15))}
-.fc{position:absolute;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:14px;padding:11px 15px;box-shadow:0 8px 28px rgba(44,36,32,.1);border:1px solid rgba(255,255,255,.9)}
-.fc-1{bottom:56px;right:-8px;animation:float 3s ease-in-out infinite}
-.fc-1 .fb{background:var(--rose);color:#fff;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:3px}
-.fc-1 .ft{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep)}
-.fc-1 .fs{font-size:9px;color:var(--muted)}
-.fc-2{top:72px;left:-14px;display:flex;align-items:center;gap:9px;animation:float 3s 1.5s ease-in-out infinite}
-.g-dot{width:8px;height:8px;border-radius:50%;background:var(--sage)}
-.g-title{font-size:11px;color:var(--text)}
-.g-sub{font-size:9px;color:var(--muted)}
+.hero-right{
+  position:relative;
+  z-index:2;
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+  height:100%;
+  min-height:600px;
+  animation:fadeUp .8s .3s ease both;
+}
+.hero-img{
+  width:100%;
+  height:100%;
+  background:transparent;
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+}
+.hero-img img{
+  width:100%;
+  max-width:650px;
+  height:auto;
+  object-fit:contain;
+  object-position:bottom right;
+  filter:none;
+}
+.fc{display:none}
+.fc-1{display:none}
+.fc-1 .fb{display:none}
+.fc-1 .ft{display:none}
+.fc-1 .fs{display:none}
+.fc-2{display:none}
+.g-dot{display:none}
+.g-title{display:none}
+.g-sub{display:none}
 
 /* BRANDS */
 .brands{padding:44px 40px;background:var(--white);border-bottom:1px solid var(--blush);text-align:center}
@@ -242,6 +338,30 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
   .fg{grid-template-columns:1fr 1fr;gap:28px}
   .products-sec,.ben-sec,.nl-sec,.brands{padding:60px 18px}
 }
+
+/* HERO PREMIUM RESPONSIVE FIX */
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    padding:96px 18px 48px;
+    text-align:left;
+    background:linear-gradient(180deg,#FAF7F4 0%,#F2E8E1 100%);
+  }
+  .hero-left{max-width:100%}
+  h1.hero-title{font-size:clamp(48px,16vw,72px)}
+  .hero-sub{max-width:100%;font-size:14px}
+  .hero-right{
+    display:flex;
+    min-height:380px;
+    margin-top:20px;
+  }
+  .hero-img img{
+    max-width:100%;
+    width:100%;
+  }
+  .hero-btns{justify-content:flex-start}
+}
+
 /* PRODUCT POPUP */
 .popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:20px}
 .popup-overlay.open{opacity:1;pointer-events:all}
@@ -267,206 +387,6 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
 .popup-add:hover{background:var(--rose)}
 .popup-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .popup-close:hover{background:var(--deep);color:#fff}
-
-
-/* =========================================================
-   HERO PREMIUM FINAL — sin solapes, CTA destacado
-   ========================================================= */
-.hero-premium{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  padding:118px 5vw 70px;
-  position:relative;
-  overflow:hidden;
-  background-image:url('https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKINCARE_COREANO_ORIGINAL_ENIGMA_STORE.jpg?v=1777326263') !important;
-  background-size:cover !important;
-  background-position:right center !important;
-  background-repeat:no-repeat !important;
-}
-.hero-premium::before{
-  content:'';
-  position:absolute;
-  inset:0 auto 0 0;
-  width:58%;
-  background:linear-gradient(90deg, rgba(250,247,244,.98) 0%, rgba(250,247,244,.92) 48%, rgba(250,247,244,.36) 78%, rgba(250,247,244,0) 100%);
-  z-index:1;
-  pointer-events:none;
-}
-.hero-premium::after{display:none !important;content:none !important}
-.hero-premium .hero-content{
-  position:relative;
-  z-index:2;
-  max-width:560px;
-  width:100%;
-  animation:fadeUp .8s ease both;
-}
-.hero-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:10px 20px;
-  border-radius:999px;
-  background:rgba(255,255,255,.78);
-  border:1px solid rgba(212,168,154,.18);
-  color:#A8796E;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  margin-bottom:22px;
-  box-shadow:0 8px 24px rgba(44,36,32,.05);
-}
-.hero-premium .hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(56px,7.2vw,96px);
-  line-height:.9;
-  font-weight:700;
-  color:#1f1c1a;
-  letter-spacing:-.035em;
-  margin:0 0 18px;
-}
-.hero-premium .hero-title span{
-  display:block;
-  color:#A8796E;
-  font-style:italic;
-  font-weight:600;
-}
-.hero-kicker{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#A8796E;
-  font-size:18px;
-  font-weight:600;
-  letter-spacing:.02em;
-  margin-bottom:14px;
-}
-.hero-kicker span{
-  width:52px;
-  height:1.5px;
-  background:#A8796E;
-  display:inline-block;
-  flex:0 0 52px;
-}
-.hero-desc{
-  max-width:500px;
-  font-size:17px;
-  line-height:1.65;
-  color:#2f2a28;
-  margin:0 0 30px;
-  font-weight:400;
-}
-.hero-icons{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:0;
-  max-width:530px;
-  margin:0 0 32px;
-}
-.hero-icon-item{
-  text-align:center;
-  padding:0 14px;
-  border-right:1px solid rgba(44,36,32,.18);
-}
-.hero-icon-item:last-child{border-right:0}
-.hero-icon-item strong{
-  display:block;
-  font-size:25px;
-  line-height:1;
-  margin-bottom:10px;
-  color:#C69A8D;
-  font-weight:400;
-}
-.hero-icon-item span{
-  display:block;
-  font-size:11px;
-  line-height:1.35;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:#2f2a28;
-}
-.hero-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:430px;
-  padding:20px 34px;
-  border-radius:999px;
-  background:#1f1f1f;
-  color:#fff;
-  text-decoration:none;
-  font-size:15px;
-  font-weight:800;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  box-shadow:0 16px 38px rgba(31,31,31,.22),0 0 28px rgba(80,119,180,.18);
-  transition:transform .28s ease,box-shadow .28s ease,background .28s ease;
-}
-.hero-btn:hover{
-  background:#000;
-  transform:translateY(-3px) scale(1.015);
-  box-shadow:0 20px 46px rgba(31,31,31,.28),0 0 34px rgba(80,119,180,.24);
-}
-.hero-proof{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin-top:24px;
-}
-.proof-avatars{
-  display:flex;
-  align-items:center;
-}
-.proof-avatars span{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  margin-left:-8px;
-  border:2px solid #fff;
-  background:linear-gradient(135deg,#E8C9BE,#FAF7F4);
-  box-shadow:0 4px 12px rgba(44,36,32,.1);
-}
-.proof-avatars span:first-child{margin-left:0}
-.hero-proof strong{
-  display:block;
-  font-size:13px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:#1f1f1f;
-}
-.hero-proof p{
-  margin:4px 0 0;
-  font-size:12px;
-  color:#6f625d;
-}
-@media(max-width:900px){
-  .hero-premium{
-    min-height:82vh;
-    padding:94px 20px 46px;
-    background-position:68% center !important;
-  }
-  .hero-premium::before{
-    width:100%;
-    background:linear-gradient(90deg, rgba(250,247,244,.97) 0%, rgba(250,247,244,.86) 58%, rgba(250,247,244,.35) 100%);
-  }
-  .hero-premium .hero-content{max-width:100%}
-  .hero-badge{font-size:9px;padding:8px 14px;margin-bottom:18px}
-  .hero-premium .hero-title{font-size:clamp(46px,15vw,66px);line-height:.92;margin-bottom:16px}
-  .hero-kicker{font-size:15px;gap:9px}
-  .hero-kicker span{width:34px;flex-basis:34px}
-  .hero-desc{font-size:14px;max-width:330px;margin-bottom:22px}
-  .hero-icons{grid-template-columns:repeat(2,1fr);gap:14px;max-width:330px;margin-bottom:24px}
-  .hero-icon-item{border-right:0;text-align:left;padding:0;display:flex;align-items:center;gap:9px}
-  .hero-icon-item strong{font-size:20px;margin:0}
-  .hero-icon-item span{font-size:9px}
-  .hero-btn{min-width:0;width:100%;max-width:340px;padding:16px 20px;font-size:12px;letter-spacing:.08em}
-  .hero-proof{margin-top:18px;gap:12px}
-  .proof-avatars span{width:31px;height:31px}
-  .hero-proof strong{font-size:11px}.hero-proof p{font-size:11px}
-}
-
 </style>
 </head>
 <body>
@@ -489,37 +409,26 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
 </nav>
 
 <!-- HERO -->
-<section class="hero hero-premium">
-  <div class="hero-content">
-    <div class="hero-badge">🇰🇷 IMPORTADO DIRECTO DE COREA DEL SUR</div>
-
-    <h1 class="hero-title">
-      Skincare <span>coreano</span><br>original
-    </h1>
-
-    <div class="hero-kicker"><span></span> Piel luminosa sin esfuerzo</div>
-
-    <p class="hero-desc">
-      Fórmulas coreanas que hidratan, iluminan y transforman tu piel desde la primera aplicación.
-    </p>
-
-    <div class="hero-icons">
-      <div class="hero-icon-item"><strong>🧪</strong><span>Fórmulas<br>efectivas</span></div>
-      <div class="hero-icon-item"><strong>🌿</strong><span>Ingredientes<br>de calidad</span></div>
-      <div class="hero-icon-item"><strong>🛡️</strong><span>Seguras para<br>tu piel</span></div>
-      <div class="hero-icon-item"><strong>♡</strong><span>Cruelty<br>free</span></div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">✦ Importado directo de Corea del Sur</div>
+    <h1 class="hero-title">Skincare<br><em>coreano</em><br>original</h1>
+    <div class="badge-row">
+      <div class="badge-gold">
+        <span class="badge-pct">100%</span>
+        <span class="badge-word">ORIGINAL</span>
+      </div>
+      <p class="badge-copy">Productos certificados,<br>importados directo desde Corea.<br>Envío a todo Chile 🇨🇱</p>
     </div>
-
-    <a href="#productos" class="hero-btn">Ver productos con descuento →</a>
-
-    <div class="hero-proof">
-      <div class="proof-avatars">
-        <span></span><span></span><span></span>
-      </div>
-      <div>
-        <strong>+5.000 clientas felices</strong>
-        <p>Productos originales · Resultados reales</p>
-      </div>
+    <p class="hero-sub">Fórmulas coreanas que hidratan, iluminan y transforman tu piel desde la primera aplicación.</p>
+    <div class="hero-btns">
+      <a href="#productos" class="btn-primary">Ver productos con descuento →</a>
+      <a href="#rutina" class="btn-ghost">Mi rutina K-Beauty</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">
+      <img src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/Diseno_sin_titulo_10_04faa3a9-4967-425c-96e2-faf3b5170915.png?v=1777242200" alt="Modelo K-Beauty skin glow">
     </div>
   </div>
 </section>

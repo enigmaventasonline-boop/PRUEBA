@@ -56,18 +56,29 @@ h1.hero-title em{font-style:italic}
 .btn-ghost:hover{background:var(--deep);color:var(--white)}
 
 /* hero visual */
-.hero-right{position:relative;z-index:2;display:flex;justify-content:center;animation:fadeUp .8s .3s ease both}
-.hero-img{width:480px;height:560px;background:transparent;}
-.hero-img img{width:100%;height:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 20px 40px rgba(44,36,32,.15))}
-.fc{position:absolute;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-radius:14px;padding:11px 15px;box-shadow:0 8px 28px rgba(44,36,32,.1);border:1px solid rgba(255,255,255,.9)}
-.fc-1{bottom:56px;right:-8px;animation:float 3s ease-in-out infinite}
-.fc-1 .fb{background:var(--rose);color:#fff;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:3px}
-.fc-1 .ft{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep)}
-.fc-1 .fs{font-size:9px;color:var(--muted)}
-.fc-2{top:72px;left:-14px;display:flex;align-items:center;gap:9px;animation:float 3s 1.5s ease-in-out infinite}
-.g-dot{width:8px;height:8px;border-radius:50%;background:var(--sage)}
-.g-title{font-size:11px;color:var(--text)}
-.g-sub{font-size:9px;color:var(--muted)}
+<div class="fs-bg fs-bg-1">
+    
+  <div class="fs-bg-el has-overlay">
+    
+    <img 
+      src="https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein.webp"
+      srcset="
+        https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein.webp 1680w,
+        https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein-1440x960.webp 1440w,
+        https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein-1024x683.webp 1024w,
+        https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein-768x512.webp 768w,
+        https://www.tilesuite.lu/wp-content/uploads/2025/04/versatilie-vein-512x341.webp 512w
+      "
+      width="1636"
+      height="1091"
+      alt="hero background"
+      decoding="async"
+      loading="lazy"
+    >
+
+  </div>
+
+</div>
 
 /* BRANDS */
 .brands{padding:44px 40px;background:var(--white);border-bottom:1px solid var(--blush);text-align:center}

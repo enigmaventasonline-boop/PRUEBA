@@ -267,6 +267,33 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
 .popup-add:hover{background:var(--rose)}
 .popup-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .popup-close:hover{background:var(--deep);color:#fff}
+
+/* =========================
+   HOVER MARCAS PREMIUM SAFE
+   Solo efecto visual: no toca estructura, scripts ni layout
+   ========================= */
+.brands .bi{
+  transition: transform .25s ease, opacity .25s ease;
+  transform-origin: center;
+}
+.brands .bi:hover{
+  transform: scale(1.08) translateY(-2px);
+  opacity:1;
+}
+.brands .bn{
+  transition: font-weight .25s ease, color .25s ease, letter-spacing .25s ease;
+}
+.brands .bi:hover .bn{
+  font-weight:700;
+  color:var(--deep);
+  letter-spacing:.18em;
+}
+.brands .bs{
+  transition: color .25s ease;
+}
+.brands .bi:hover .bs{
+  color:var(--rose);
+}
 </style>
 </head>
 <body>

@@ -541,6 +541,46 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
   .hero-card-bottom{bottom:92px;right:-28px;}
 }
 
+
+
+/* =========================
+   FIX HERO PC: CENTRAR VISUAL Y QUITAR ESPACIO SUPERIOR
+   ========================= */
+@media (min-width:901px){
+  .hero-pro{
+    min-height:calc(100vh - 56px);
+    padding-top:70px !important;
+    padding-bottom:34px !important;
+    align-items:center;
+  }
+
+  .hero-pro-visual{
+    min-height:640px !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  .hero-product-card{
+    height:640px !important;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .hero-product-card img{
+    object-position:center center !important;
+    transform:scale(1.13) translateY(-26px) !important;
+  }
+
+  .hero-card-top{
+    top:58px !important;
+  }
+
+  .hero-card-bottom{
+    bottom:54px !important;
+  }
+}
+
 </style>
 </head>
 <body>

@@ -134,6 +134,33 @@ h1.hero-title em{font-style:italic}
 .sbrand{font-size:9px;color:rgba(255,255,255,.32)}
 .sico{font-size:16px;margin-left:auto}
 
+/* FORMULARIO RUTINA PERSONALIZADA */
+.rutina-form{margin-top:18px;padding:16px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);border-radius:14px}
+.rf-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--white);margin-bottom:5px}
+.rf-desc{font-size:11px!important;line-height:1.55!important;color:rgba(255,255,255,.46)!important;margin-bottom:12px!important}
+.rf-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.rf-input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:var(--white);font-size:12px;font-family:'DM Sans',sans-serif;outline:none}
+.rf-input::placeholder{color:rgba(255,255,255,.36)}
+.rf-input:focus{border-color:var(--rose);background:rgba(255,255,255,.1)}
+.rf-input option{color:#2C2420;background:#fff}
+.rf-btn{margin-top:10px;width:100%;justify-content:center}
+.routine-result{margin-top:14px;display:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:14px}
+.routine-result.open{display:block}
+.rr-head{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);margin-bottom:5px}
+.rr-copy{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55;margin-bottom:12px}
+.rr-list{display:grid;grid-template-columns:1fr;gap:8px}
+.rr-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:8px}
+.rr-item img{width:48px;height:48px;border-radius:9px;object-fit:cover;background:var(--blush);flex-shrink:0}
+.rr-info{flex:1;min-width:0}
+.rr-step{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:2px}
+.rr-name{font-size:11px;color:var(--white);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rr-price{font-size:11px;color:rgba(255,255,255,.58);margin-top:2px}
+.rr-add{border:none;background:var(--rose);color:#fff;border-radius:20px;padding:7px 10px;font-size:10px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap}
+.rr-add:hover{transform:translateY(-1px);background:#c97c25}
+.rr-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.rr-actions .btn-primary{padding:11px 16px;font-size:10px}
+@media(max-width:900px){.rf-grid{grid-template-columns:1fr}.rutina-form{margin-top:14px}.rr-add{padding:8px 11px}}
+
 /* BENEFITS */
 .ben-sec{padding:88px 40px;background:var(--blush)}
 .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:44px auto 0}
@@ -407,6 +434,40 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
         <div class="step"><div class="snum">3</div><div><div class="sname">Sérum / Esencia</div><div class="sbrand">Celimax · Retinol Shot Serum</div></div><div class="sico">✨</div></div>
         <div class="step"><div class="snum">4</div><div><div class="sname">Hidratante Barrier</div><div class="sbrand">Dr Althea · 345 Relief Cream</div></div><div class="sico">🌿</div></div>
       </div>
+      <div class="rutina-form">
+        <div class="rf-title">Recomienda mi rutina</div>
+        <p class="rf-desc">Completa tus datos y te mostraremos productos recomendados de la tienda para una rutina simple de 4 pasos.</p>
+        <div class="rf-grid">
+          <input id="clientName" class="rf-input" type="text" placeholder="Nombre">
+          <select id="skinType" class="rf-input">
+            <option value="">Tipo de piel</option>
+            <option value="grasa">Grasa</option>
+            <option value="seca">Seca</option>
+            <option value="mixta">Mixta</option>
+            <option value="sensible">Sensible</option>
+            <option value="acne">Acneica</option>
+            <option value="manchas">Manchas / tono apagado</option>
+          </select>
+          <select id="ageRange" class="rf-input">
+            <option value="">Edad</option>
+            <option value="18-25">18-25</option>
+            <option value="26-35">26-35</option>
+            <option value="36-45">36-45</option>
+            <option value="45+">45+</option>
+          </select>
+          <select id="skinGoal" class="rf-input">
+            <option value="">Objetivo principal</option>
+            <option value="hidratacion">Hidratación</option>
+            <option value="glow">Glow / luminosidad</option>
+            <option value="poros">Poros / textura</option>
+            <option value="calma">Calmar irritación</option>
+            <option value="antiage">Firmeza / líneas finas</option>
+          </select>
+        </div>
+        <button class="btn-primary rf-btn" onclick="getRoutine()">Ver productos recomendados</button>
+        <div id="resultadoRutina" class="routine-result"></div>
+      </div>
+
       <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Armar mi rutina</button>
     </div>
   </div>
@@ -613,6 +674,108 @@ const WA_NUM = '56928775107';
 let cart = [];
 
 function fmt(n){return '$'+n.toLocaleString('es-CL')}
+
+function escapeHtml(str){
+  return String(str || '').replace(/[&<>'"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];
+  });
+}
+
+function getRoutine(){
+  const nameRaw = document.getElementById('clientName') ? document.getElementById('clientName').value.trim() : '';
+  const skin = document.getElementById('skinType') ? document.getElementById('skinType').value : '';
+  const age = document.getElementById('ageRange') ? document.getElementById('ageRange').value : '';
+  const goal = document.getElementById('skinGoal') ? document.getElementById('skinGoal').value : '';
+  const result = document.getElementById('resultadoRutina');
+  if(!result) return;
+
+  const clientName = nameRaw ? escapeHtml(nameRaw) : 'Hola';
+
+  if(!skin){
+    result.classList.add('open');
+    result.innerHTML = '<div class="rr-head">Completa tu tipo de piel</div><div class="rr-copy">Selecciona tu tipo de piel para mostrar productos recomendados de la tienda.</div>';
+    return;
+  }
+
+  const routines = {
+    grasa: {
+      title:'Rutina para piel grasa',
+      copy:'Enfocada en limpieza, control de sebo, poros y protección ligera.',
+      ids:[5,27,29,4],
+      steps:['Limpieza','Sérum poros','Hidratante ligera','Protección solar']
+    },
+    seca: {
+      title:'Rutina para piel seca',
+      copy:'Enfocada en hidratación, nutrición y refuerzo de barrera cutánea.',
+      ids:[25,21,12,8],
+      steps:['Limpieza suave','Ampoule hidratante','Crema barrera','Mascarilla nocturna']
+    },
+    mixta: {
+      title:'Rutina para piel mixta',
+      copy:'Balance entre hidratación ligera, luminosidad y textura uniforme.',
+      ids:[25,24,13,11],
+      steps:['Limpieza balanceada','Tónico','Sérum glow','Crema calmante']
+    },
+    sensible: {
+      title:'Rutina para piel sensible',
+      copy:'Pensada para calmar, hidratar y proteger la barrera de la piel.',
+      ids:[25,24,51,11],
+      steps:['Limpieza suave','Tónico calmante','Centella','Crema alivio']
+    },
+    acne: {
+      title:'Rutina para piel acneica',
+      copy:'Enfocada en limpieza, control de sebo, manchas post-acné y textura.',
+      ids:[5,6,1,29],
+      steps:['Limpieza antiacné','Tónico Noni','Sérum manchas','Gel hidratante']
+    },
+    manchas: {
+      title:'Rutina para manchas y tono apagado',
+      copy:'Enfocada en luminosidad, tono uniforme e hidratación diaria.',
+      ids:[33,32,34,18],
+      steps:['Limpieza iluminadora','Tónico glow','Ampoule brightening','Protección solar']
+    }
+  };
+
+  const routine = routines[skin];
+  const selected = routine.ids.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+  const extra = age || goal ? `<div class="rr-copy">Perfil: ${age ? 'Edad '+escapeHtml(age) : ''}${age && goal ? ' · ' : ''}${goal ? 'Objetivo '+escapeHtml(goal) : ''}</div>` : '';
+
+  result.classList.add('open');
+  result.innerHTML = `
+    <div class="rr-head">${clientName}, estos son los productos recomendados de la tienda</div>
+    <div class="rr-copy"><strong>${routine.title}</strong><br>${routine.copy}</div>
+    ${extra}
+    <div class="rr-list">
+      ${selected.map((p,idx)=>`
+        <div class="rr-item">
+          <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy">
+          <div class="rr-info">
+            <div class="rr-step">Paso ${idx+1} · ${routine.steps[idx] || p.cat}</div>
+            <div class="rr-name">${escapeHtml(p.name)}</div>
+            <div class="rr-price">${fmt(p.price)}</div>
+          </div>
+          <button class="rr-add" onclick="addToCart(${p.id})">Agregar</button>
+        </div>
+      `).join('')}
+    </div>
+    <div class="rr-actions">
+      <button class="btn-primary" onclick="addRoutineToCart([${selected.map(p=>p.id).join(',')}])">Agregar rutina completa</button>
+      <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver catálogo</button>
+    </div>
+  `;
+}
+
+function addRoutineToCart(ids){
+  ids.forEach(id=>{
+    const p = PRODUCTS.find(x=>x.id===id);
+    if(!p) return;
+    const ex = cart.find(x=>x.id===id);
+    if(ex) ex.qty++;
+    else cart.push({...p, qty:1});
+  });
+  updateCartUI();
+  toggleCart();
+}
 
 var currentPopupId = null;
 

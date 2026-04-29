@@ -1,984 +1,1073 @@
 <!-- ============================================================
   sections/enigma-skincare-landing.liquid
   Enigma Store Chile — K-Beauty Skincare Landing
-  Version 2.0 — Shopify OS 2.0 compatible
+  Version 3.0 — Visual upgrade sobre base funcional Shopify OS 2.0
+  CÓDIGO 1 = base funcional (intacta)
+  CÓDIGO 2 = mejoras visuales aplicadas encima
 ============================================================ -->
 
 <style>
-  /* ─── CSS Variables ─────────────────────────────────────── */
-  :root {
-    --ens-white:      #FFFFFF;
-    --ens-cream:      #FAF7F4;
-    --ens-beige:      #F2E8E1;
-    --ens-rose:       #D4A89A;
-    --ens-sage:       #8FA89A;
-    --ens-dark:       #2C2420;
-    --ens-muted:      #8C7D78;
-    --ens-cta:        #1E88E5;
-    --ens-cta-active: #000000;
-    --ens-radius:     12px;
-    --ens-shadow:     0 4px 24px rgba(44,36,32,0.08);
-    --ens-font:       'Cormorant Garamond', Georgia, serif;
-    --ens-font-body:  'DM Sans', 'Helvetica Neue', sans-serif;
-    --ens-transition: 0.25s cubic-bezier(0.4,0,0.2,1);
-  }
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-  /* ─── Reset & Base ──────────────────────────────────────── */
-  .ens-landing * { box-sizing: border-box; margin: 0; padding: 0; }
-  .ens-landing { font-family: var(--ens-font-body); color: var(--ens-dark); background: var(--ens-cream); }
-  .ens-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-  img { display: block; max-width: 100%; }
+/* ─── CSS VARIABLES ─────────────────────────────────────── */
+:root {
+  --ens-white:      #FFFFFF;
+  --ens-cream:      #F8F4F0;
+  --ens-beige:      #EDE0D6;
+  --ens-rose:       #C49585;
+  --ens-sage:       #7A9E8E;
+  --ens-dark:       #1E1510;
+  --ens-muted:      #7A6E68;
+  --ens-cta:        #1E88E5;
+  --ens-cta-active: #000000;
+  --ens-gold:       #B8901A;
+  --ens-gold-l:     #D9B455;
+  --ens-radius:     14px;
+  --ens-shadow:     0 4px 24px rgba(30,21,16,0.09);
+  --ens-font:       'Cormorant Garamond', Georgia, serif;
+  --ens-font-body:  'DM Sans', 'Helvetica Neue', sans-serif;
+  --ens-transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
 
-  /* ─── Google Fonts ──────────────────────────────────────── */
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+/* ─── RESET & BASE ───────────────────────────────────────── */
+.ens-landing *, .ens-landing *::before, .ens-landing *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+.ens-landing {
+  font-family: var(--ens-font-body);
+  color: var(--ens-dark);
+  background: var(--ens-cream);
+  overflow-x: hidden;
+}
+.ens-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.ens-landing img { display: block; max-width: 100%; }
 
-  /* ══════════════════════════════════════════════════════════
-     NAVBAR
-  ══════════════════════════════════════════════════════════ */
-  .ens-nav {
-    position: sticky; top: 0; z-index: 1000;
-    background: rgba(250,247,244,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212,168,154,0.2);
-    padding: 0 20px;
-  }
-  .ens-nav-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-  }
-  .ens-nav-logo {
-    font-family: var(--ens-font);
-    font-size: 22px; font-weight: 600;
-    color: var(--ens-dark); text-decoration: none;
-    letter-spacing: 0.5px;
-  }
-  .ens-nav-logo span { color: var(--ens-rose); }
-  .ens-nav-actions { display: flex; align-items: center; gap: 8px; }
-  .ens-nav-cart-btn {
-    position: relative;
-    background: none; border: none; cursor: pointer;
-    padding: 8px; color: var(--ens-dark);
-    display: flex; align-items: center; gap: 6px;
-    font-family: var(--ens-font-body); font-size: 14px;
-    font-weight: 500;
-    transition: color var(--ens-transition);
-  }
-  .ens-nav-cart-btn:hover { color: var(--ens-rose); }
-  .ens-cart-count {
-    background: var(--ens-rose); color: white;
-    border-radius: 50%; width: 20px; height: 20px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600;
-    position: absolute; top: 0; right: 0;
-    transition: transform 0.2s ease;
-  }
-  .ens-cart-count.bump { animation: ens-bump 0.3s ease; }
-  @keyframes ens-bump {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.4); }
-  }
-  .ens-nav-checkout {
-    background: var(--ens-dark); color: white;
-    border: none; border-radius: 8px;
-    padding: 8px 18px; font-size: 13px;
-    font-weight: 500; cursor: pointer;
-    text-decoration: none; display: inline-block;
-    transition: background var(--ens-transition);
-  }
-  .ens-nav-checkout:hover { background: var(--ens-rose); }
+/* ══════════════════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════════════════ */
+.ens-nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(248,244,240,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(196,149,133,0.15);
+  padding: 0 32px;
+}
+.ens-nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 66px;
+}
+.ens-nav-logo {
+  font-family: var(--ens-font);
+  font-size: 20px; font-weight: 600;
+  color: var(--ens-dark); text-decoration: none;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  line-height: 1;
+}
+.ens-nav-logo small {
+  display: block; font-size: 8px;
+  letter-spacing: 0.3em; color: var(--ens-muted);
+  font-weight: 300; text-align: center;
+  font-family: var(--ens-font-body);
+}
+.ens-nav-links { display: flex; gap: 28px; list-style: none; }
+.ens-nav-links a {
+  font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ens-dark);
+  text-decoration: none; transition: color var(--ens-transition);
+  font-weight: 400;
+}
+.ens-nav-links a:hover { color: var(--ens-rose); }
+.ens-nav-actions { display: flex; align-items: center; gap: 10px; }
+.ens-nav-shop {
+  background: var(--ens-dark); color: var(--ens-white);
+  padding: 9px 20px; border-radius: 30px;
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  transition: all var(--ens-transition); font-weight: 500;
+  font-family: var(--ens-font-body);
+}
+.ens-nav-shop:hover { background: var(--ens-rose); }
+.ens-nav-cart-btn {
+  position: relative;
+  background: none; border: 2px solid var(--ens-dark);
+  color: var(--ens-dark); padding: 7px 16px;
+  border-radius: 30px; font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; font-family: var(--ens-font-body);
+  transition: all var(--ens-transition);
+  display: flex; align-items: center; gap: 7px;
+}
+.ens-nav-cart-btn:hover { background: var(--ens-dark); color: var(--ens-white); }
+.ens-cart-count {
+  background: var(--ens-rose); color: white;
+  border-radius: 50%; width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+  position: absolute; top: -7px; right: -7px;
+}
+.ens-cart-count.bump { animation: ens-bump 0.35s ease; }
+@keyframes ens-bump {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.55); }
+}
+.ens-nav-cart-btn.ens-bounce { animation: ens-cartBounce 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes ens-cartBounce {
+  0%,100% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-4px) scale(1.08); }
+  40% { transform: translateX(4px) scale(1.05); }
+  60% { transform: translateX(-3px) scale(1.03); }
+  80% { transform: translateX(2px) scale(1.01); }
+}
+/* fly-to-cart image element */
+.ens-fly-img {
+  position: fixed; border-radius: 50%; object-fit: cover;
+  pointer-events: none; z-index: 9999;
+  box-shadow: 0 4px 20px rgba(30,21,16,0.3);
+}
 
-  /* ══════════════════════════════════════════════════════════
-     HERO — Split layout: texto izquierda / imagen derecha
-  ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════ */
+.ens-hero {
+  min-height: 90vh;
+  background: linear-gradient(135deg,#EDE3DA 0%,#E3D0C2 38%,#D5BBA8 72%,#C9AA96 100%);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 104px 48px 56px;
+  position: relative; overflow: hidden;
+}
+.ens-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 68% 50%, rgba(255,245,235,0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ens-hero::after {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,149,133,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* hero left — texto */
+.ens-hero-left { z-index: 2; animation: ens-fadeUp 0.8s 0.1s ease both; }
+.ens-hero-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);
+  border: 1px solid rgba(196,149,133,0.35);
+  padding: 5px 16px; border-radius: 30px;
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ens-rose);
+  margin-bottom: 20px; font-family: var(--ens-font-body);
+}
+.ens-hero-tag::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ens-sage);
+  animation: ens-blink 2s ease-in-out infinite;
+}
+@keyframes ens-blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.ens-hero h1 {
+  font-family: var(--ens-font);
+  font-size: clamp(58px, 7.5vw, 112px);
+  font-weight: 700; line-height: 0.9;
+  color: var(--ens-dark); letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.ens-hero h1 em {
+  font-style: italic;
+  background: linear-gradient(110deg, #C49585, #A87060);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* badge original gold del código 2 */
+.ens-badge-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.ens-badge-gold {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: conic-gradient(var(--ens-gold) 0deg,var(--ens-gold-l) 60deg,var(--ens-gold) 120deg,#7A6010 180deg,var(--ens-gold) 240deg,var(--ens-gold-l) 300deg,var(--ens-gold) 360deg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(150,120,20,0.38);
+  position: relative; flex-shrink: 0;
+}
+.ens-badge-gold::before {
+  content: ''; position: absolute; inset: 7px; border-radius: 50%;
+  background: linear-gradient(135deg,#8A6010 0%,#C09020 50%,#7A5010 100%);
+}
+.ens-badge-gold span {
+  position: relative; z-index: 2; color: #fff;
+  font-family: var(--ens-font-body); line-height: 1;
+}
+.ens-badge-pct { font-size: 17px; font-weight: 800; }
+.ens-badge-word { font-size: 6px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.ens-badge-copy {
+  font-size: 13px; color: var(--ens-dark);
+  line-height: 1.6; font-weight: 300; opacity: 0.8;
+}
+.ens-hero-sub {
+  font-size: 14px; line-height: 1.8;
+  color: var(--ens-dark); max-width: 370px;
+  margin-bottom: 30px; font-weight: 300; opacity: 0.8;
+}
+.ens-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+
+/* hero right — imagen */
+.ens-hero-right {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; align-items: flex-end;
+  animation: ens-fadeUp 0.8s 0.3s ease both;
+}
+.ens-hero-img { width: 520px; height: 620px; }
+.ens-hero-img img {
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: bottom center;
+  filter: drop-shadow(0 24px 48px rgba(30,21,16,0.18));
+}
+/* floating cards encima de la imagen */
+.ens-fc {
+  position: absolute;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+  border-radius: 14px; padding: 11px 15px;
+  box-shadow: 0 8px 32px rgba(30,21,16,0.12);
+  border: 1px solid rgba(255,255,255,0.95);
+}
+.ens-fc-1 { bottom: 52px; right: -12px; animation: ens-float 3s ease-in-out infinite; }
+.ens-fc-1 .ens-fb {
+  background: var(--ens-rose); color: #fff;
+  font-size: 8px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 2px 9px;
+  border-radius: 20px; display: inline-block; margin-bottom: 3px;
+}
+.ens-fc-1 .ens-ft {
+  font-family: var(--ens-font); font-size: 17px;
+  font-weight: 600; color: var(--ens-dark);
+}
+.ens-fc-1 .ens-fs { font-size: 9px; color: var(--ens-muted); }
+.ens-fc-2 {
+  top: 68px; left: -18px;
+  display: flex; align-items: center; gap: 9px;
+  animation: ens-float 3s 1.5s ease-in-out infinite;
+}
+.ens-g-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ens-sage); }
+.ens-g-title { font-size: 11px; color: var(--ens-dark); font-weight: 500; }
+.ens-g-sub { font-size: 9px; color: var(--ens-muted); }
+/* stats flotantes */
+.ens-hero-stats {
+  position: absolute; bottom: 24px; left: -18px; z-index: 5;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 16px; padding: 14px 20px;
+  display: flex; gap: 20px;
+  animation: ens-float 4s ease-in-out infinite;
+}
+.ens-hs { text-align: center; }
+.ens-hs-num {
+  font-family: var(--ens-font);
+  font-size: 20px; font-weight: 600;
+  color: var(--ens-dark); line-height: 1;
+}
+.ens-hs-label { font-size: 10px; color: var(--ens-muted); letter-spacing: 0.4px; margin-top: 2px; }
+.ens-hs-div { width: 1px; background: rgba(30,21,16,0.12); align-self: stretch; }
+/* hero trust items */
+.ens-hero-trust { display: flex; gap: 20px; flex-wrap: wrap; }
+.ens-hero-trust-item {
+  display: flex; align-items: center; gap: 7px;
+  color: var(--ens-dark); font-size: 12px;
+  font-weight: 500; opacity: 0.75;
+}
+.ens-hero-trust-item svg { flex-shrink: 0; }
+
+@keyframes ens-fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ens-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   TRUST STRIP
+══════════════════════════════════════════════════════════ */
+.ens-trust-strip {
+  background: var(--ens-white);
+  border-bottom: 1px solid var(--ens-beige);
+  padding: 14px 32px;
+}
+.ens-trust-strip-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: center;
+  align-items: center; gap: 40px; flex-wrap: wrap;
+}
+.ens-trust-strip-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--ens-muted); font-weight: 500;
+}
+.ens-trust-strip-item span { font-size: 16px; }
+
+/* ══════════════════════════════════════════════════════════
+   BRANDS MARQUEE
+══════════════════════════════════════════════════════════ */
+.ens-brands {
+  background: var(--ens-white);
+  padding: 28px 0;
+  border-bottom: 1px solid var(--ens-beige);
+  overflow: hidden; text-align: center;
+}
+.ens-brands-label {
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ens-muted);
+  margin-bottom: 20px; display: block;
+}
+.ens-brands-marquee { width: 100%; overflow: hidden; }
+.ens-brands-track {
+  display: flex; gap: 52px;
+  animation: ens-marquee 28s linear infinite;
+  width: max-content;
+}
+.ens-brands:hover .ens-brands-track { animation-play-state: paused; }
+@keyframes ens-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ens-bi {
+  opacity: 0.5; transition: opacity 0.25s, transform 0.25s;
+  cursor: pointer;
+}
+.ens-bi:hover { opacity: 1; transform: translateY(-2px); }
+.ens-brand-name {
+  font-family: var(--ens-font);
+  font-size: 18px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ens-dark); white-space: nowrap;
+}
+.ens-brand-name.it { font-style: italic; letter-spacing: 0.04em; font-size: 20px; }
+.ens-brand-name.sm { font-size: 11px; letter-spacing: 0.26em; }
+.ens-brand-sub { font-size: 8px; letter-spacing: 0.12em; color: var(--ens-muted); text-transform: uppercase; }
+
+/* ══════════════════════════════════════════════════════════
+   SECTION COMMONS
+══════════════════════════════════════════════════════════ */
+.ens-sh { text-align: center; margin-bottom: 48px; }
+.ens-section-label {
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ens-rose);
+  font-weight: 600; margin-bottom: 10px; display: block;
+}
+.ens-section-title {
+  font-family: var(--ens-font);
+  font-size: clamp(30px, 3.8vw, 50px);
+  font-weight: 600; color: var(--ens-dark);
+  line-height: 1.08;
+}
+.ens-section-title em { font-style: italic; font-weight: 400; }
+.ens-section-sub {
+  font-size: 13px; color: var(--ens-muted);
+  margin-top: 10px; font-weight: 300; line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FILTERS
+══════════════════════════════════════════════════════════ */
+.ens-filters {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 44px;
+}
+.ens-filter-btn {
+  padding: 8px 20px; border-radius: 30px;
+  font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer;
+  border: 1.5px solid rgba(30,21,16,0.14);
+  background: transparent; color: var(--ens-dark);
+  transition: all 0.22s; font-family: var(--ens-font-body);
+}
+.ens-filter-btn.active, .ens-filter-btn:hover {
+  background: var(--ens-dark); color: var(--ens-white);
+  border-color: var(--ens-dark);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRODUCTS
+══════════════════════════════════════════════════════════ */
+.ens-products { padding: 88px 24px; background: var(--ens-cream); }
+.ens-products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; max-width: 1100px; margin: 0 auto;
+}
+
+/* PRODUCT CARD */
+.ens-card {
+  background: var(--ens-white);
+  border-radius: 18px; overflow: hidden;
+  box-shadow: var(--ens-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.ens-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 44px rgba(30,21,16,0.12);
+}
+.ens-card-img-wrap {
+  position: relative;
+  background: var(--ens-beige);
+  height: 220px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.ens-card-img {
+  width: 100%; height: 100%;
+  object-fit: contain; padding: 16px;
+  transition: opacity var(--ens-transition), transform 0.4s ease;
+}
+.ens-card-img-hover {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; padding: 16px;
+  opacity: 0;
+  transition: opacity var(--ens-transition);
+}
+.ens-card:hover .ens-card-img { opacity: 0; transform: scale(1.04); }
+.ens-card:hover .ens-card-img-hover { opacity: 1; }
+.ens-card-badge {
+  position: absolute; top: 10px; left: 10px;
+  font-size: 8px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 9px;
+  border-radius: 20px; color: #fff; font-weight: 600; z-index: 1;
+  background: var(--ens-rose);
+}
+.ens-card-badge.new { background: var(--ens-sage); }
+.ens-card-badge.best { background: var(--ens-dark); }
+.ens-card-wishlist {
+  position: absolute; top: 10px; right: 10px;
+  background: white; border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 14px; transition: transform var(--ens-transition); z-index: 1;
+}
+.ens-card-wishlist:hover { transform: scale(1.15); }
+.ens-card-body {
+  padding: 14px 16px 18px;
+  flex: 1; display: flex; flex-direction: column;
+}
+.ens-card-vendor {
+  font-size: 8px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ens-muted);
+  margin-bottom: 4px; font-weight: 600;
+}
+.ens-card-title {
+  font-family: var(--ens-font);
+  font-size: 15px; font-weight: 500;
+  color: var(--ens-dark); line-height: 1.25;
+  margin-bottom: 5px; flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ens-card-rating {
+  display: flex; align-items: center; gap: 4px;
+  margin-bottom: 8px;
+}
+.ens-stars { color: #D4A017; font-size: 11px; letter-spacing: 1px; }
+.ens-rating-count { font-size: 10px; color: var(--ens-muted); }
+.ens-card-price {
+  display: flex; align-items: baseline; gap: 7px;
+  margin-bottom: 12px;
+}
+.ens-price-sale {
+  font-family: var(--ens-font);
+  font-size: 18px; font-weight: 600; color: var(--ens-dark);
+}
+.ens-price-compare {
+  font-size: 11px; color: var(--ens-muted);
+  text-decoration: line-through; font-weight: 300;
+}
+.ens-price-savings {
+  font-size: 10px; font-weight: 600;
+  color: var(--ens-rose); background: rgba(196,149,133,0.12);
+  padding: 2px 7px; border-radius: 10px;
+}
+.ens-card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.ens-btn-view {
+  background: transparent;
+  border: 1.5px solid rgba(30,21,16,0.14);
+  color: var(--ens-dark); border-radius: 9px;
+  padding: 10px 7px; font-size: 11px;
+  font-weight: 500; cursor: pointer;
+  text-decoration: none; text-align: center;
+  transition: all var(--ens-transition);
+  font-family: var(--ens-font-body);
+  display: flex; align-items: center; justify-content: center;
+}
+.ens-btn-view:hover { border-color: var(--ens-dark); background: var(--ens-dark); color: white; }
+.ens-btn-atc {
+  background: var(--ens-cta); color: white;
+  border: none; border-radius: 9px;
+  padding: 10px 7px; font-size: 11px;
+  font-weight: 600; cursor: pointer;
+  transition: all var(--ens-transition);
+  font-family: var(--ens-font-body);
+}
+.ens-btn-atc:hover { opacity: 0.9; }
+.ens-btn-atc:active { background: var(--ens-cta-active); }
+.ens-btn-atc.loading { pointer-events: none; opacity: 0.7; }
+.ens-btn-atc.success { background: var(--ens-sage); pointer-events: none; }
+.ens-btn-atc.disabled {
+  background: var(--ens-muted);
+  pointer-events: none; cursor: not-allowed;
+}
+.ens-view-more-wrap { text-align: center; margin-top: 44px; }
+
+/* ══════════════════════════════════════════════════════════
+   ROUTINE
+══════════════════════════════════════════════════════════ */
+.ens-rutina-sec {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 500px; margin: 0 32px 80px;
+  border-radius: 22px; overflow: hidden;
+  box-shadow: 0 18px 56px rgba(30,21,16,0.12);
+}
+.ens-rv {
+  background: linear-gradient(150deg, #DEC8BE, #C4A090);
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  min-height: 400px;
+}
+.ens-rv img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+  position: absolute; inset: 0;
+}
+.ens-skin-glow {
+  position: absolute; top: 30%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,240,220,0.32) 0%, transparent 70%);
+}
+.ens-rc {
+  background: var(--ens-dark); color: var(--ens-white);
+  padding: 56px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.ens-rc .ens-section-label { color: var(--ens-rose); text-align: left; }
+.ens-rc h2 {
+  font-family: var(--ens-font);
+  font-size: clamp(34px, 3.2vw, 50px);
+  font-weight: 600; line-height: 1.08; margin-bottom: 12px;
+}
+.ens-rc h2 em { font-style: italic; color: var(--ens-rose); font-weight: 400; }
+.ens-rc p {
+  font-size: 13px; line-height: 1.8;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300; margin-bottom: 28px;
+}
+.ens-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.ens-step {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: background 0.2s;
+}
+.ens-step:hover { background: rgba(255,255,255,0.09); }
+.ens-snum {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid rgba(196,149,133,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ens-font); font-size: 14px;
+  color: var(--ens-rose); flex-shrink: 0;
+}
+.ens-sname { font-size: 12px; color: var(--ens-white); }
+.ens-sbrand { font-size: 9px; color: rgba(255,255,255,0.32); }
+.ens-sico { font-size: 16px; margin-left: auto; }
+
+/* ══════════════════════════════════════════════════════════
+   BENEFITS
+══════════════════════════════════════════════════════════ */
+.ens-benefits { background: var(--ens-beige); padding: 88px 24px; }
+.ens-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; max-width: 1100px; margin: 0 auto;
+}
+.ens-benefit-card {
+  background: var(--ens-white);
+  border-radius: 16px; padding: 28px 22px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: var(--ens-shadow);
+}
+.ens-benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(30,21,16,0.1);
+}
+.ens-benefit-icon {
+  font-size: 30px; margin-bottom: 14px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--ens-beige);
+  display: flex; align-items: center; justify-content: center;
+  margin-left: auto; margin-right: auto;
+}
+.ens-benefit-card h3 {
+  font-family: var(--ens-font);
+  font-size: 18px; font-weight: 500;
+  color: var(--ens-dark); margin-bottom: 7px;
+}
+.ens-benefit-card p {
+  font-size: 11px; color: var(--ens-muted);
+  line-height: 1.7; font-weight: 300;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SOCIAL PROOF / REVIEWS
+══════════════════════════════════════════════════════════ */
+.ens-social-proof { background: var(--ens-white); padding: 80px 24px; }
+.ens-stats-bar {
+  display: flex; justify-content: center;
+  gap: 56px; flex-wrap: wrap; margin-bottom: 52px;
+}
+.ens-stat { text-align: center; }
+.ens-stat-num {
+  font-family: var(--ens-font);
+  font-size: 38px; font-weight: 600;
+  color: var(--ens-dark); line-height: 1; margin-bottom: 4px;
+}
+.ens-stat-label { font-size: 12px; color: var(--ens-muted); }
+.ens-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; max-width: 1100px; margin: 0 auto;
+}
+.ens-review-card {
+  background: var(--ens-cream);
+  border-radius: var(--ens-radius);
+  padding: 24px; border: 1px solid var(--ens-beige);
+}
+.ens-review-stars { color: #D4A017; font-size: 14px; margin-bottom: 10px; }
+.ens-review-text {
+  font-size: 13px; line-height: 1.7;
+  color: var(--ens-dark); margin-bottom: 14px;
+  font-style: italic; font-weight: 300;
+}
+.ens-review-author {
+  font-size: 11px; font-weight: 600;
+  color: var(--ens-muted); text-transform: uppercase; letter-spacing: 1px;
+}
+.ens-review-product { font-size: 10px; color: var(--ens-sage); margin-top: 2px; }
+
+/* ══════════════════════════════════════════════════════════
+   TRUST BAR
+══════════════════════════════════════════════════════════ */
+.ens-trust-bar {
+  background: var(--ens-dark); padding: 20px;
+}
+.ens-trust-bar-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; justify-content: center;
+  gap: 48px; flex-wrap: wrap;
+}
+.ens-trust-bar-item {
+  display: flex; align-items: center; gap: 10px;
+  color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500;
+}
+.ens-trust-bar-item span { font-size: 20px; }
+
+/* ══════════════════════════════════════════════════════════
+   NEWSLETTER
+══════════════════════════════════════════════════════════ */
+.ens-newsletter {
+  background: var(--ens-dark); padding: 88px 24px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.ens-newsletter::before {
+  content: ''; position: absolute; top: -150px; left: -150px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,149,133,0.06) 0%, transparent 70%);
+}
+.ens-newsletter-inner { position: relative; z-index: 2; max-width: 520px; margin: 0 auto; }
+.ens-newsletter h2 {
+  font-family: var(--ens-font);
+  font-size: clamp(32px, 3.8vw, 54px);
+  font-weight: 600; color: var(--ens-white); margin-bottom: 10px; line-height: 1.08;
+}
+.ens-newsletter h2 em { font-style: italic; color: var(--ens-rose); font-weight: 400; }
+.ens-newsletter p {
+  font-size: 13px; color: rgba(255,255,255,0.45);
+  font-weight: 300; margin-bottom: 32px; line-height: 1.7;
+}
+.ens-newsletter-form {
+  display: flex; gap: 9px;
+  max-width: 420px; margin: 0 auto 12px;
+}
+.ens-newsletter-input {
+  flex: 1; padding: 13px 20px; border-radius: 40px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06); color: var(--ens-white);
+  font-size: 13px; font-family: var(--ens-font-body);
+  outline: none; transition: border-color 0.2s;
+}
+.ens-newsletter-input::placeholder { color: rgba(255,255,255,0.26); }
+.ens-newsletter-input:focus { border-color: var(--ens-rose); }
+.ens-newsletter-submit {
+  padding: 13px 22px; background: var(--ens-rose); color: #fff;
+  border: none; border-radius: 40px;
+  font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer;
+  font-family: var(--ens-font-body); transition: all 0.25s;
+  white-space: nowrap;
+}
+.ens-newsletter-submit:hover { background: var(--ens-gold); }
+.ens-newsletter-note { font-size: 10px; color: rgba(255,255,255,0.2); }
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════ */
+.ens-footer {
+  background: #1A1210; color: rgba(255,255,255,0.45);
+  padding: 48px 32px 28px;
+}
+.ens-footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 44px; margin-bottom: 36px;
+}
+.ens-footer-brand-name {
+  font-family: var(--ens-font);
+  font-size: 17px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.82); text-decoration: none;
+  display: block; margin-bottom: 10px;
+}
+.ens-footer-desc {
+  font-size: 11px; line-height: 1.8;
+  color: rgba(255,255,255,0.3); font-weight: 300; margin-bottom: 16px;
+}
+.ens-footer-social { display: flex; gap: 10px; }
+.ens-footer-social a {
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,0.08); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px;
+  transition: background var(--ens-transition);
+}
+.ens-footer-social a:hover { background: var(--ens-rose); color: #fff; }
+.ens-footer-col h4 {
+  font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  margin-bottom: 14px; font-weight: 600;
+}
+.ens-footer-col ul { list-style: none; }
+.ens-footer-col li { margin-bottom: 8px; }
+.ens-footer-col a {
+  font-size: 11px; color: rgba(255,255,255,0.3);
+  text-decoration: none; transition: color var(--ens-transition);
+}
+.ens-footer-col a:hover { color: var(--ens-rose); }
+.ens-footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 22px; max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 8px; font-size: 10px;
+}
+.ens-footer-payments { display: flex; gap: 7px; align-items: center; }
+.ens-pay-badge {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5); font-size: 9px;
+  font-weight: 600; padding: 3px 8px;
+  border-radius: 4px; letter-spacing: 0.5px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARRITO / SIDE CART DRAWER
+══════════════════════════════════════════════════════════ */
+.ens-cart-overlay {
+  position: fixed; inset: 0; z-index: 1998;
+  background: rgba(30,21,16,0.5);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--ens-transition);
+  backdrop-filter: blur(4px);
+}
+.ens-cart-overlay.open { opacity: 1; pointer-events: auto; }
+.ens-cart-drawer {
+  position: fixed; top: 0; right: -440px; bottom: 0;
+  width: 420px; max-width: 100vw;
+  background: var(--ens-white); z-index: 1999;
+  display: flex; flex-direction: column;
+  box-shadow: -18px 0 56px rgba(30,21,16,0.15);
+  transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.ens-cart-drawer.open { right: 0; }
+.ens-cart-header {
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid var(--ens-beige);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.ens-cart-title {
+  font-family: var(--ens-font);
+  font-size: 21px; font-weight: 600; color: var(--ens-dark);
+}
+.ens-cart-close {
+  background: none; border: none; font-size: 20px;
+  cursor: pointer; color: var(--ens-muted);
+  transition: all 0.2s; width: 34px; height: 34px;
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.ens-cart-close:hover { background: var(--ens-beige); color: var(--ens-dark); }
+.ens-cart-items {
+  flex: 1; overflow-y: auto;
+  padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.ens-cart-empty {
+  text-align: center; padding: 50px 16px;
+  color: var(--ens-muted); font-size: 14px;
+}
+.ens-cart-empty-icon { font-size: 44px; margin-bottom: 12px; }
+.ens-cart-item {
+  display: flex; gap: 12px; padding: 12px;
+  background: var(--ens-cream); border-radius: 12px;
+}
+.ens-cart-item-img {
+  width: 68px; height: 68px;
+  object-fit: contain; border-radius: 9px;
+  background: var(--ens-beige); padding: 6px; flex-shrink: 0;
+}
+.ens-cart-item-info { flex: 1; min-width: 0; }
+.ens-cart-item-vendor {
+  font-size: 8px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ens-muted);
+}
+.ens-cart-item-title {
+  font-family: var(--ens-font); font-size: 14px;
+  color: var(--ens-dark); margin: 2px 0 7px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ens-cart-item-controls { display: flex; align-items: center; }
+.ens-qty-btn {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid rgba(30,21,16,0.15);
+  background: #fff; cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; font-weight: 600;
+}
+.ens-qty-btn:hover { background: var(--ens-dark); color: #fff; border-color: var(--ens-dark); }
+.ens-qty-val {
+  font-size: 13px; font-weight: 600;
+  color: var(--ens-dark); min-width: 28px; text-align: center;
+}
+.ens-cart-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--ens-muted); font-size: 14px;
+  padding: 3px; transition: color 0.2s;
+}
+.ens-cart-remove:hover { color: #e53e3e; }
+.ens-cart-item-price {
+  font-family: var(--ens-font); font-size: 16px;
+  color: var(--ens-dark); align-self: center;
+  white-space: nowrap; margin-left: auto;
+}
+.ens-cart-footer {
+  padding: 18px 20px;
+  border-top: 1px solid var(--ens-beige);
+  background: var(--ens-cream);
+}
+.ens-cart-subtotal {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 6px;
+}
+.ens-cart-subtotal span:first-child { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ens-muted); }
+.ens-cart-subtotal-price {
+  font-family: var(--ens-font);
+  font-size: 24px; font-weight: 600; color: var(--ens-dark);
+}
+.ens-cart-shipping-note { font-size: 10px; color: var(--ens-sage); margin-bottom: 14px; }
+.ens-cart-checkout-btn {
+  width: 100%; background: var(--ens-dark);
+  color: white; border: none; border-radius: 12px;
+  padding: 15px; font-size: 14px; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  font-family: var(--ens-font-body); letter-spacing: 0.02em;
+}
+.ens-cart-checkout-btn:hover {
+  background: #22c55e;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(34,197,94,0.35);
+}
+.ens-cart-checkout-btn:active { background: #16a34a; }
+.ens-cart-wa-btn {
+  width: 100%; margin-top: 8px;
+  background: #25D366; color: #fff;
+  border: none; border-radius: 12px;
+  padding: 12px 15px; font-size: 12px; font-weight: 500;
+  cursor: pointer; font-family: var(--ens-font-body);
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: all 0.25s; opacity: 0.9;
+}
+.ens-cart-wa-btn:hover { opacity: 1; transform: translateY(-1px); }
+.ens-cart-continue {
+  display: block; text-align: center;
+  margin-top: 10px; font-size: 12px;
+  color: var(--ens-muted); cursor: pointer;
+  background: none; border: none;
+  font-family: var(--ens-font-body); text-decoration: underline;
+}
+.ens-cart-continue:hover { color: var(--ens-dark); }
+/* payment logos in cart */
+.ens-pay-methods { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--ens-beige); }
+.ens-pay-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ens-muted); text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; margin-bottom: 8px;
+}
+.ens-pay-logos { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.ens-pay-logo { width: 46px; height: 30px; border-radius: 4px; flex-shrink: 0; }
+.ens-cart-note { font-size: 10px; color: var(--ens-muted); text-align: center; margin-top: 6px; }
+
+/* ─── TOAST ──────────────────────────────────────────────── */
+.ens-toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ens-dark); color: white;
+  padding: 11px 22px; border-radius: 30px;
+  font-size: 13px; font-weight: 500;
+  z-index: 3000; white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s;
+  opacity: 0; display: flex; align-items: center; gap: 7px;
+}
+.ens-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ─── WHATSAPP FLOAT ──────────────────────────────────────── */
+.ens-whatsapp {
+  position: fixed; bottom: 26px; right: 26px; z-index: 900;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #25D366; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 22px rgba(37,211,102,0.42);
+  text-decoration: none;
+  transition: all 0.3s; animation: ens-pulse 2.5s ease-in-out infinite;
+}
+.ens-whatsapp:hover {
+  transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.52);
+  animation: none;
+}
+@keyframes ens-pulse {
+  0%,100% { box-shadow: 0 6px 22px rgba(37,211,102,0.42); }
+  50% { box-shadow: 0 6px 32px rgba(37,211,102,0.65); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   BOTONES PRINCIPALES
+══════════════════════════════════════════════════════════ */
+.ens-btn-primary {
+  background: var(--ens-cta);
+  color: white; border: none; border-radius: 40px;
+  padding: 14px 30px; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; font-weight: 600;
+  transition: box-shadow var(--ens-transition), transform var(--ens-transition);
+  border: none; cursor: pointer;
+  font-family: var(--ens-font-body); display: inline-block;
+  box-shadow: 0 4px 20px rgba(30,136,229,0.38);
+}
+.ens-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(30,136,229,0.48);
+}
+.ens-btn-primary:active { background: var(--ens-cta-active); transform: translateY(0); box-shadow: none; }
+.ens-btn-secondary {
+  background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9);
+  border: 1.5px solid rgba(255,255,255,0.25); border-radius: 40px;
+  padding: 13px 28px; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none; font-weight: 400;
+  transition: all var(--ens-transition); display: inline-block;
+  backdrop-filter: blur(8px); font-family: var(--ens-font-body);
+  cursor: pointer;
+}
+.ens-btn-secondary:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); }
+.ens-btn-ghost {
+  border: 1.5px solid var(--ens-dark); color: var(--ens-dark);
+  padding: 13px 28px; border-radius: 40px;
+  font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  font-weight: 400; transition: all 0.3s;
+  display: inline-block; background: transparent;
+  cursor: pointer; font-family: var(--ens-font-body);
+}
+.ens-btn-ghost:hover { background: var(--ens-dark); color: var(--ens-white); }
+
+/* ══════════════════════════════════════════════════════════
+   REVEAL ANIMATIONS
+══════════════════════════════════════════════════════════ */
+.ens-reveal {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.ens-reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE
+══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .ens-nav { padding: 0 18px; }
+  .ens-nav-links { display: none; }
+  .ens-nav-shop { display: none; }
+  /* hero mobile stack */
   .ens-hero {
-    position: relative; overflow: hidden;
-    min-height: 620px;
-    background: linear-gradient(135deg, #1a1008 0%, #2C2420 55%, #3d2215 100%);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-  }
-
-  /* Lado izquierdo: contenido */
-  .ens-hero-content {
-    position: relative; z-index: 3;
-    display: flex; flex-direction: column;
-    justify-content: center;
-    padding: 72px 48px 72px 64px;
-  }
-
-  /* Lado derecho: imagen */
-  .ens-hero-img-col {
-    position: relative;
-    overflow: hidden;
-    display: flex; align-items: flex-end; justify-content: center;
-  }
-  .ens-hero-img-col::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      270deg,
-      transparent 40%,
-      rgba(26,16,8,0.55) 100%
-    );
-    z-index: 1;
-  }
-  .ens-hero-picture {
-    width: 100%; height: 100%;
-    display: block; position: absolute; inset: 0;
-  }
-  .ens-hero-picture img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  /* Decorative accent */
-  .ens-hero::after {
-    content: '';
-    position: absolute;
-    left: 50%; top: -60px;
-    width: 1px; height: calc(100% + 120px);
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(212,168,154,0.3) 30%,
-      rgba(212,168,154,0.3) 70%,
-      transparent 100%
-    );
-    z-index: 4;
-    pointer-events: none;
-  }
-
-  /* Badge */
-  .ens-hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(143,168,154,0.2);
-    border: 1px solid rgba(143,168,154,0.5);
-    color: #b8d4c8; font-size: 11px;
-    font-weight: 600; letter-spacing: 2.5px;
-    text-transform: uppercase;
-    padding: 7px 16px; border-radius: 30px;
-    margin-bottom: 24px;
-    width: fit-content;
-    backdrop-filter: blur(8px);
-  }
-  .ens-hero-badge::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--ens-sage);
-    animation: ens-blink 2s ease-in-out infinite;
-  }
-  @keyframes ens-blink {
-    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
-  }
-
-  /* Heading */
-  .ens-hero h1 {
-    font-family: var(--ens-font);
-    font-size: clamp(36px, 4.5vw, 62px);
-    font-weight: 600; line-height: 1.1;
-    color: white; margin-bottom: 20px;
-    letter-spacing: -1px;
-  }
-  .ens-hero h1 em {
-    font-style: italic;
-    background: linear-gradient(90deg, #f2c4b4, #D4A89A);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Subtitle */
-  .ens-hero-sub {
-    color: rgba(255,255,255,0.72);
-    font-size: 16px; line-height: 1.7;
-    margin-bottom: 36px;
-    max-width: 400px;
-  }
-
-  /* CTAs */
-  .ens-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 44px; }
-
-  .ens-btn-primary {
-    background: var(--ens-cta);
-    color: white; border: none; border-radius: var(--ens-radius);
-    padding: 15px 30px; font-size: 15px;
-    font-weight: 600; cursor: pointer;
-    text-decoration: none; display: inline-block;
-    transition: background var(--ens-transition), transform var(--ens-transition), box-shadow var(--ens-transition);
-    font-family: var(--ens-font-body);
-    box-shadow: 0 4px 20px rgba(30,136,229,0.4);
-  }
-  .ens-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(30,136,229,0.5);
-  }
-  .ens-btn-primary:active { background: var(--ens-cta-active); transform: translateY(0); box-shadow: none; }
-
-  .ens-btn-secondary {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.9);
-    border: 1.5px solid rgba(255,255,255,0.25);
-    border-radius: var(--ens-radius);
-    padding: 14px 28px; font-size: 15px;
-    font-weight: 500; cursor: pointer;
-    text-decoration: none; display: inline-block;
-    transition: all var(--ens-transition);
-    backdrop-filter: blur(8px);
-    font-family: var(--ens-font-body);
-  }
-  .ens-btn-secondary:hover {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.5);
-  }
-
-  /* Trust pills */
-  .ens-hero-trust {
-    display: flex; gap: 20px; flex-wrap: wrap;
-  }
-  .ens-trust-item {
-    display: flex; align-items: center; gap: 7px;
-    color: rgba(255,255,255,0.65); font-size: 12px;
-    font-weight: 500;
-  }
-  .ens-trust-item svg { opacity: 0.8; flex-shrink: 0; }
-
-  /* Floating stats card (desktop) */
-  .ens-hero-stats {
-    position: absolute; bottom: 28px; right: 28px; z-index: 5;
-    background: rgba(255,255,255,0.10);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 16px; padding: 16px 22px;
-    display: flex; gap: 24px;
-    animation: ens-float 4s ease-in-out infinite;
-  }
-  @keyframes ens-float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-  .ens-hero-stat { text-align: center; }
-  .ens-hero-stat-num {
-    font-family: var(--ens-font);
-    font-size: 22px; font-weight: 600;
-    color: white; line-height: 1;
-  }
-  .ens-hero-stat-label {
-    font-size: 10px; color: rgba(255,255,255,0.6);
-    letter-spacing: 0.5px; margin-top: 2px;
-  }
-  .ens-hero-stat-divider {
-    width: 1px; background: rgba(255,255,255,0.2);
-    align-self: stretch;
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     BRANDS MARQUEE
-  ══════════════════════════════════════════════════════════ */
-  .ens-brands {
-    background: var(--ens-white);
-    padding: 24px 0;
-    border-bottom: 1px solid var(--ens-beige);
-    overflow: hidden;
-  }
-  .ens-brands-track {
-    display: flex; gap: 60px;
-    animation: ens-marquee 24s linear infinite;
-    width: max-content;
-  }
-  .ens-brands:hover .ens-brands-track { animation-play-state: paused; }
-  @keyframes ens-marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  .ens-brand-name {
-    font-family: var(--ens-font);
-    font-size: 18px; font-weight: 500;
-    color: var(--ens-muted); white-space: nowrap;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    transition: color var(--ens-transition);
-    cursor: default;
-  }
-  .ens-brand-name:hover { color: var(--ens-rose); }
-
-  /* ══════════════════════════════════════════════════════════
-     BENEFITS
-  ══════════════════════════════════════════════════════════ */
-  .ens-benefits {
-    background: var(--ens-beige);
-    padding: 64px 20px;
-  }
-  .ens-section-label {
-    text-align: center;
-    font-size: 11px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--ens-sage);
-    font-weight: 600; margin-bottom: 12px;
-  }
-  .ens-section-title {
-    font-family: var(--ens-font);
-    text-align: center; font-size: clamp(26px, 4vw, 40px);
-    font-weight: 600; color: var(--ens-dark);
-    margin-bottom: 48px; line-height: 1.2;
-  }
-  .ens-benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 28px; max-width: 960px; margin: 0 auto;
-  }
-  .ens-benefit-card {
-    background: var(--ens-white);
-    border-radius: var(--ens-radius);
-    padding: 32px 24px; text-align: center;
-    box-shadow: var(--ens-shadow);
-    transition: transform var(--ens-transition);
-  }
-  .ens-benefit-card:hover { transform: translateY(-4px); }
-  .ens-benefit-icon {
-    width: 56px; height: 56px;
-    background: var(--ens-beige);
-    border-radius: 50%; margin: 0 auto 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-  }
-  .ens-benefit-card h3 {
-    font-family: var(--ens-font);
-    font-size: 18px; font-weight: 600;
-    color: var(--ens-dark); margin-bottom: 8px;
-  }
-  .ens-benefit-card p {
-    font-size: 13px; color: var(--ens-muted);
-    line-height: 1.6;
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     PRODUCTS
-  ══════════════════════════════════════════════════════════ */
-  .ens-products { padding: 72px 20px; background: var(--ens-cream); }
-  .ens-filters {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    justify-content: center; margin-bottom: 40px;
-  }
-  .ens-filter-btn {
-    background: var(--ens-white); border: 1.5px solid var(--ens-beige);
-    color: var(--ens-dark); border-radius: 30px;
-    padding: 8px 20px; font-size: 13px;
-    font-weight: 500; cursor: pointer;
-    transition: all var(--ens-transition);
-    font-family: var(--ens-font-body);
-  }
-  .ens-filter-btn:hover,
-  .ens-filter-btn.active {
-    background: var(--ens-dark); color: white;
-    border-color: var(--ens-dark);
-  }
-  .ens-products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 24px; max-width: 1200px; margin: 0 auto;
-  }
-
-  /* Product Card */
-  .ens-card {
-    background: var(--ens-white);
-    border-radius: var(--ens-radius);
-    overflow: hidden;
-    box-shadow: var(--ens-shadow);
-    transition: transform var(--ens-transition), box-shadow var(--ens-transition);
-    position: relative;
-    display: flex; flex-direction: column;
-  }
-  .ens-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(44,36,32,0.14);
-  }
-  .ens-card-img-wrap {
-    position: relative;
-    background: var(--ens-beige);
-    padding: 20px;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-  }
-  .ens-card-img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    transition: opacity var(--ens-transition);
-  }
-  .ens-card-img-hover {
-    position: absolute; inset: 20px;
-    object-fit: contain;
-    opacity: 0;
-    transition: opacity var(--ens-transition);
-  }
-  .ens-card:hover .ens-card-img { opacity: 0; }
-  .ens-card:hover .ens-card-img-hover { opacity: 1; }
-  .ens-card-badge {
-    position: absolute; top: 12px; left: 12px;
-    background: var(--ens-rose); color: white;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 20px;
-    z-index: 1;
-  }
-  .ens-card-badge.new { background: var(--ens-sage); }
-  .ens-card-badge.best { background: var(--ens-dark); }
-  .ens-card-wishlist {
-    position: absolute; top: 10px; right: 10px;
-    background: white; border: none;
-    width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    font-size: 16px;
-    transition: transform var(--ens-transition);
-  }
-  .ens-card-wishlist:hover { transform: scale(1.15); }
-  .ens-card-body {
-    padding: 16px 18px 20px;
-    flex: 1; display: flex; flex-direction: column;
-  }
-  .ens-card-vendor {
-    font-size: 10px; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--ens-sage);
-    font-weight: 600; margin-bottom: 6px;
-  }
-  .ens-card-title {
-    font-family: var(--ens-font);
-    font-size: 15px; font-weight: 500;
-    color: var(--ens-dark); line-height: 1.4;
-    margin-bottom: 10px;
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .ens-card-rating {
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 10px;
-  }
-  .ens-stars { color: #F5A623; font-size: 12px; letter-spacing: 1px; }
-  .ens-rating-count { font-size: 11px; color: var(--ens-muted); }
-  .ens-card-price {
-    display: flex; align-items: baseline; gap: 8px;
-    margin-bottom: 14px;
-  }
-  .ens-price-sale {
-    font-size: 18px; font-weight: 700;
-    color: var(--ens-dark);
-  }
-  .ens-price-compare {
-    font-size: 13px; color: var(--ens-muted);
-    text-decoration: line-through;
-  }
-  .ens-price-savings {
-    font-size: 11px; font-weight: 600;
-    color: var(--ens-rose); background: rgba(212,168,154,0.15);
-    padding: 2px 7px; border-radius: 10px;
-  }
-  .ens-card-actions {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .ens-btn-view {
-    background: transparent;
-    border: 1.5px solid var(--ens-beige);
-    color: var(--ens-dark); border-radius: 8px;
-    padding: 10px 8px; font-size: 12px;
-    font-weight: 500; cursor: pointer;
-    text-decoration: none; text-align: center;
-    transition: all var(--ens-transition);
-    font-family: var(--ens-font-body);
-  }
-  .ens-btn-view:hover { border-color: var(--ens-dark); }
-  .ens-btn-atc {
-    background: var(--ens-cta); color: white;
-    border: none; border-radius: 8px;
-    padding: 10px 8px; font-size: 12px;
-    font-weight: 600; cursor: pointer;
-    transition: all var(--ens-transition);
-    font-family: var(--ens-font-body);
-    position: relative; overflow: hidden;
-  }
-  .ens-btn-atc:hover { opacity: 0.9; transform: translateY(-1px); }
-  .ens-btn-atc:active { background: var(--ens-cta-active); transform: translateY(0); }
-  .ens-btn-atc.loading { pointer-events: none; opacity: 0.7; }
-  .ens-btn-atc.success {
-    background: var(--ens-sage);
-    pointer-events: none;
-  }
-  .ens-btn-atc.disabled {
-    background: var(--ens-muted);
-    pointer-events: none; cursor: not-allowed;
-  }
-
-  /* Fly to cart animation */
-  @keyframes ens-fly {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(0.5) translateY(-30px); opacity: 0.6; }
-    100% { transform: scale(0.1) translateY(-60px); opacity: 0; }
-  }
-  .ens-fly-anim { animation: ens-fly 0.5s ease forwards; }
-
-  /* ══════════════════════════════════════════════════════════
-     ROUTINE
-  ══════════════════════════════════════════════════════════ */
-  .ens-routine {
-    background: linear-gradient(135deg, var(--ens-dark) 0%, #3d2f2a 100%);
-    padding: 80px 20px; color: white;
-  }
-  .ens-routine .ens-section-title { color: white; }
-  .ens-routine .ens-section-label { color: var(--ens-rose); }
-  .ens-routine-steps {
-    display: flex; gap: 0;
-    max-width: 1000px; margin: 0 auto;
-    position: relative;
-  }
-  .ens-routine-steps::before {
-    content: '';
-    position: absolute; top: 28px; left: 28px; right: 28px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--ens-rose), var(--ens-sage));
-    z-index: 0;
-  }
-  .ens-routine-step {
-    flex: 1; text-align: center;
-    padding: 0 12px; position: relative; z-index: 1;
-  }
-  .ens-step-num {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: var(--ens-rose);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--ens-font);
-    font-size: 22px; font-weight: 600; color: white;
-    margin: 0 auto 16px;
-    border: 3px solid var(--ens-dark);
-    box-shadow: 0 0 0 2px var(--ens-rose);
-  }
-  .ens-routine-step h4 {
-    font-family: var(--ens-font);
-    font-size: 16px; font-weight: 600;
-    margin-bottom: 6px; color: white;
-  }
-  .ens-routine-step p {
-    font-size: 12px; color: rgba(255,255,255,0.65);
-    line-height: 1.5;
-  }
-  .ens-routine-step .ens-step-emoji {
-    font-size: 20px; margin-bottom: 8px;
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     SOCIAL PROOF
-  ══════════════════════════════════════════════════════════ */
-  .ens-social-proof {
-    background: var(--ens-white); padding: 72px 20px;
-  }
-  .ens-stats-bar {
-    display: flex; justify-content: center; gap: 60px;
-    flex-wrap: wrap; margin-bottom: 56px;
-  }
-  .ens-stat { text-align: center; }
-  .ens-stat-num {
-    font-family: var(--ens-font);
-    font-size: 40px; font-weight: 600;
-    color: var(--ens-dark); line-height: 1;
-    margin-bottom: 4px;
-  }
-  .ens-stat-label { font-size: 13px; color: var(--ens-muted); }
-  .ens-reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px; max-width: 960px; margin: 0 auto;
-  }
-  .ens-review-card {
-    background: var(--ens-cream); border-radius: var(--ens-radius);
-    padding: 24px; border: 1px solid var(--ens-beige);
-  }
-  .ens-review-stars { color: #F5A623; font-size: 14px; margin-bottom: 10px; }
-  .ens-review-text {
-    font-size: 14px; line-height: 1.65;
-    color: var(--ens-dark); margin-bottom: 14px;
-    font-style: italic;
-  }
-  .ens-review-author {
-    font-size: 12px; font-weight: 600;
-    color: var(--ens-muted); text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .ens-review-product { font-size: 11px; color: var(--ens-sage); margin-top: 2px; }
-
-  /* ══════════════════════════════════════════════════════════
-     TRUST BAR
-  ══════════════════════════════════════════════════════════ */
-  .ens-trust-bar {
-    background: var(--ens-dark);
-    padding: 20px;
-  }
-  .ens-trust-bar-inner {
-    max-width: 960px; margin: 0 auto;
-    display: flex; justify-content: center;
-    gap: 48px; flex-wrap: wrap;
-  }
-  .ens-trust-bar-item {
-    display: flex; align-items: center; gap: 10px;
-    color: rgba(255,255,255,0.85); font-size: 13px;
-    font-weight: 500;
-  }
-  .ens-trust-bar-item span { font-size: 20px; }
-
-  /* ══════════════════════════════════════════════════════════
-     NEWSLETTER
-  ══════════════════════════════════════════════════════════ */
-  .ens-newsletter {
-    background: var(--ens-beige); padding: 72px 20px;
-    text-align: center;
-  }
-  .ens-newsletter-inner { max-width: 520px; margin: 0 auto; }
-  .ens-newsletter h2 {
-    font-family: var(--ens-font);
-    font-size: 32px; font-weight: 600;
-    color: var(--ens-dark); margin-bottom: 10px;
-  }
-  .ens-newsletter p {
-    font-size: 15px; color: var(--ens-muted);
-    margin-bottom: 28px; line-height: 1.6;
-  }
-  .ens-newsletter-form {
-    display: flex; gap: 0;
-    background: white; border-radius: 10px;
-    border: 1.5px solid var(--ens-beige);
-    overflow: hidden;
-    box-shadow: var(--ens-shadow);
-  }
-  .ens-newsletter-input {
-    flex: 1; border: none; outline: none;
-    padding: 14px 18px; font-size: 14px;
-    font-family: var(--ens-font-body);
-    background: transparent; color: var(--ens-dark);
-  }
-  .ens-newsletter-submit {
-    background: var(--ens-cta); color: white;
-    border: none; padding: 14px 24px;
-    font-size: 14px; font-weight: 600;
-    cursor: pointer; white-space: nowrap;
-    font-family: var(--ens-font-body);
-    transition: background var(--ens-transition);
-  }
-  .ens-newsletter-submit:hover { background: var(--ens-dark); }
-  .ens-newsletter-note {
-    margin-top: 12px; font-size: 11px;
-    color: var(--ens-muted);
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     FOOTER
-  ══════════════════════════════════════════════════════════ */
-  .ens-footer {
-    background: var(--ens-dark); color: rgba(255,255,255,0.7);
-    padding: 48px 20px 28px;
-  }
-  .ens-footer-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: 40px; margin-bottom: 40px;
-  }
-  .ens-footer-brand-name {
-    font-family: var(--ens-font);
-    font-size: 22px; font-weight: 600;
-    color: white; margin-bottom: 10px;
-  }
-  .ens-footer-brand-name span { color: var(--ens-rose); }
-  .ens-footer-desc { font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
-  .ens-footer-social { display: flex; gap: 12px; }
-  .ens-footer-social a {
-    width: 36px; height: 36px;
-    background: rgba(255,255,255,0.1); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; text-decoration: none; font-size: 16px;
-    transition: background var(--ens-transition);
-  }
-  .ens-footer-social a:hover { background: var(--ens-rose); }
-  .ens-footer-col h4 {
-    color: white; font-size: 13px;
-    font-weight: 600; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 16px;
-  }
-  .ens-footer-col ul { list-style: none; }
-  .ens-footer-col li { margin-bottom: 9px; }
-  .ens-footer-col a {
-    color: rgba(255,255,255,0.6); text-decoration: none;
-    font-size: 13px;
-    transition: color var(--ens-transition);
-  }
-  .ens-footer-col a:hover { color: var(--ens-rose); }
-  .ens-footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 12px;
-    font-size: 12px;
-  }
-  .ens-footer-payments { display: flex; gap: 8px; align-items: center; }
-  .ens-pay-badge {
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.7); font-size: 10px;
-    font-weight: 600; padding: 4px 10px;
-    border-radius: 4px; letter-spacing: 0.5px;
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     SIDE CART
-  ══════════════════════════════════════════════════════════ */
-  .ens-cart-overlay {
-    position: fixed; inset: 0; z-index: 1998;
-    background: rgba(44,36,32,0.5);
-    opacity: 0; pointer-events: none;
-    transition: opacity var(--ens-transition);
-    backdrop-filter: blur(4px);
-  }
-  .ens-cart-overlay.open { opacity: 1; pointer-events: auto; }
-  .ens-cart-drawer {
-    position: fixed; top: 0; right: -420px; bottom: 0;
-    width: 420px; max-width: 100vw;
-    background: var(--ens-white); z-index: 1999;
-    display: flex; flex-direction: column;
-    box-shadow: -8px 0 40px rgba(44,36,32,0.15);
-    transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
-  }
-  .ens-cart-drawer.open { right: 0; }
-  .ens-cart-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--ens-beige);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .ens-cart-title {
-    font-family: var(--ens-font);
-    font-size: 20px; font-weight: 600;
-    color: var(--ens-dark);
-  }
-  .ens-cart-close {
-    background: none; border: none; cursor: pointer;
-    width: 36px; height: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--ens-dark); font-size: 20px;
-    transition: background var(--ens-transition);
-  }
-  .ens-cart-close:hover { background: var(--ens-beige); }
-  .ens-cart-items {
-    flex: 1; overflow-y: auto;
-    padding: 16px 24px;
-  }
-  .ens-cart-empty {
-    text-align: center; padding: 60px 20px;
-    color: var(--ens-muted); font-size: 14px;
-  }
-  .ens-cart-empty-icon { font-size: 48px; margin-bottom: 12px; }
-  .ens-cart-item {
-    display: flex; gap: 14px; padding: 16px 0;
-    border-bottom: 1px solid var(--ens-beige);
-    align-items: flex-start;
-  }
-  .ens-cart-item-img {
-    width: 72px; height: 72px;
-    object-fit: contain; border-radius: 8px;
-    background: var(--ens-beige); padding: 6px;
-    flex-shrink: 0;
-  }
-  .ens-cart-item-info { flex: 1; min-width: 0; }
-  .ens-cart-item-vendor {
-    font-size: 10px; text-transform: uppercase;
-    letter-spacing: 1.5px; color: var(--ens-sage);
-    font-weight: 600; margin-bottom: 3px;
-  }
-  .ens-cart-item-title {
-    font-size: 13px; font-weight: 500;
-    color: var(--ens-dark); line-height: 1.4;
-    margin-bottom: 10px;
-    white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ens-cart-item-controls {
-    display: flex; align-items: center; gap: 0;
-  }
-  .ens-qty-btn {
-    width: 28px; height: 28px;
-    background: var(--ens-beige); border: none;
-    border-radius: 6px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 600; color: var(--ens-dark);
-    transition: background var(--ens-transition);
-    line-height: 1;
-  }
-  .ens-qty-btn:hover { background: var(--ens-rose); color: white; }
-  .ens-qty-val {
-    width: 36px; text-align: center;
-    font-size: 14px; font-weight: 600; color: var(--ens-dark);
-  }
-  .ens-cart-item-price {
-    font-size: 15px; font-weight: 700;
-    color: var(--ens-dark); white-space: nowrap;
-    padding-top: 2px;
-  }
-  .ens-cart-remove {
-    background: none; border: none; cursor: pointer;
-    color: var(--ens-muted); font-size: 18px;
-    padding: 4px; line-height: 1;
-    transition: color var(--ens-transition);
-    margin-top: -2px;
-  }
-  .ens-cart-remove:hover { color: #e53e3e; }
-  .ens-cart-footer {
-    padding: 20px 24px;
-    border-top: 1px solid var(--ens-beige);
-    background: var(--ens-cream);
-  }
-  .ens-cart-subtotal {
-    display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 6px;
-  }
-  .ens-cart-subtotal span:first-child { font-size: 14px; color: var(--ens-muted); }
-  .ens-cart-subtotal-price {
-    font-family: var(--ens-font);
-    font-size: 22px; font-weight: 600; color: var(--ens-dark);
-  }
-  .ens-cart-shipping-note {
-    font-size: 11px; color: var(--ens-sage);
-    margin-bottom: 16px;
-  }
-  .ens-cart-checkout-btn {
-    width: 100%; background: var(--ens-cta);
-    color: white; border: none; border-radius: var(--ens-radius);
-    padding: 16px; font-size: 15px; font-weight: 700;
-    cursor: pointer; text-decoration: none;
-    display: block; text-align: center;
-    transition: all var(--ens-transition);
-    font-family: var(--ens-font-body);
-    letter-spacing: 0.5px;
-  }
-  .ens-cart-checkout-btn:hover { background: var(--ens-dark); }
-  .ens-cart-checkout-btn:active { background: var(--ens-cta-active); }
-  .ens-cart-continue {
-    display: block; text-align: center;
-    margin-top: 12px; font-size: 13px;
-    color: var(--ens-muted); cursor: pointer;
-    background: none; border: none;
-    font-family: var(--ens-font-body);
-    text-decoration: underline;
-  }
-  .ens-cart-continue:hover { color: var(--ens-dark); }
-
-  /* ─── Toast ─────────────────────────────────────────────── */
-  .ens-toast {
-    position: fixed; bottom: 24px; left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--ens-dark); color: white;
-    padding: 12px 24px; border-radius: 30px;
-    font-size: 14px; font-weight: 500;
-    z-index: 3000; white-space: nowrap;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s;
-    opacity: 0;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .ens-toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  /* ─── WhatsApp ───────────────────────────────────────────── */
-  .ens-whatsapp {
-    position: fixed; bottom: 24px; right: 24px; z-index: 900;
-    width: 56px; height: 56px; border-radius: 50%;
-    background: #25D366;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-    text-decoration: none;
-    transition: transform var(--ens-transition), box-shadow var(--ens-transition);
-    animation: ens-pulse 2.5s ease-in-out infinite;
-  }
-  .ens-whatsapp:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 28px rgba(37,211,102,0.5);
-    animation: none;
-  }
-  @keyframes ens-pulse {
-    0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
-    50% { box-shadow: 0 4px 32px rgba(37,211,102,0.65); }
-  }
-
-  /* ══════════════════════════════════════════════════════════
-     RESPONSIVE — MOBILE
-  ══════════════════════════════════════════════════════════ */
-  @media (max-width: 768px) {
-    /* Hero: stack vertical en mobile */
-    .ens-hero {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      min-height: unset;
-    }
-    .ens-hero::after { display: none; }
-    .ens-hero-img-col {
-      order: -1; /* imagen arriba */
-      height: 280px;
-      position: relative;
-    }
-    .ens-hero-img-col::before {
-      background: linear-gradient(
-        180deg,
-        transparent 30%,
-        rgba(26,16,8,0.6) 100%
-      );
-    }
-    .ens-hero-content {
-      padding: 32px 24px 40px;
-    }
-    .ens-hero h1 { font-size: 28px; letter-spacing: -0.5px; }
-    .ens-hero-sub { font-size: 14px; max-width: 100%; }
-    .ens-hero-ctas { margin-bottom: 28px; }
-    .ens-hero-stats { display: none; }
-    .ens-hero-trust { gap: 12px; }
-
-    .ens-products-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    .ens-card-body { padding: 12px 12px 14px; }
-    .ens-card-title { font-size: 13px; }
-    .ens-price-sale { font-size: 15px; }
-    .ens-btn-view, .ens-btn-atc { font-size: 11px; padding: 9px 5px; }
-
-    .ens-routine-steps {
-      flex-direction: column; gap: 24px;
-    }
-    .ens-routine-steps::before { display: none; }
-    .ens-routine-step { padding: 0; }
-
-    .ens-footer-inner {
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-    .ens-footer-bottom { flex-direction: column; text-align: center; }
-
-    .ens-stats-bar { gap: 30px; }
-    .ens-stat-num { font-size: 28px; }
-
-    .ens-newsletter-form { flex-direction: column; }
-    .ens-newsletter-submit { border-radius: 0 0 8px 8px; }
-
-    .ens-trust-bar-inner { gap: 20px; }
-    .ens-trust-bar-item { font-size: 12px; }
-  }
-
-  @media (max-width: 480px) {
-    .ens-products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .ens-benefits-grid { grid-template-columns: repeat(2, 1fr); }
-    .ens-footer-inner { grid-template-columns: 1fr; }
-    .ens-section-title { font-size: 24px; }
-    .ens-cart-drawer { width: 100vw; }
-  }
+    grid-template-columns: 1fr;
+    padding: 96px 20px 48px;
+    text-align: center; min-height: unset;
+  }
+  .ens-hero-right { display: none; }
+  .ens-hero-ctas { justify-content: center; }
+  .ens-badge-row { justify-content: center; }
+  .ens-hero-trust { justify-content: center; }
+  /* products 2 cols */
+  .ens-products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .ens-card-body { padding: 12px 12px 14px; }
+  .ens-card-title { font-size: 13px; }
+  .ens-price-sale { font-size: 15px; }
+  .ens-btn-view, .ens-btn-atc { font-size: 11px; padding: 9px 5px; }
+  /* rutina mobile stack */
+  .ens-rutina-sec { grid-template-columns: 1fr; margin: 0 18px 56px; }
+  .ens-rv { height: 240px; }
+  .ens-rc { padding: 36px 28px; }
+  /* benefits 2 cols */
+  .ens-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  /* reviews 1 col */
+  .ens-reviews-grid { grid-template-columns: 1fr; }
+  /* footer */
+  .ens-footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .ens-footer-bottom { flex-direction: column; text-align: center; }
+  /* misc */
+  .ens-stats-bar { gap: 30px; }
+  .ens-stat-num { font-size: 28px; }
+  .ens-newsletter-form { flex-direction: column; }
+  .ens-newsletter-submit { border-radius: 40px; }
+  .ens-trust-strip-inner { gap: 20px; }
+  .ens-trust-bar-inner { gap: 20px; }
+  .ens-trust-bar-item { font-size: 12px; }
+  .ens-products, .ens-benefits, .ens-newsletter { padding: 60px 18px; }
+  .ens-social-proof { padding: 60px 18px; }
+  .ens-brands { padding: 24px 0; }
+}
+@media (max-width: 480px) {
+  .ens-products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ens-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  .ens-footer-inner { grid-template-columns: 1fr; }
+  .ens-section-title { font-size: 26px; }
+  .ens-cart-drawer { width: 100vw; max-width: 100vw; }
+  .ens-hero h1 { font-size: 52px; }
+}
 </style>
 
 <div class="ens-landing" id="ens-landing">
@@ -986,39 +1075,45 @@
   <!-- ══ NAVBAR ═══════════════════════════════════════════ -->
   <nav class="ens-nav" role="navigation">
     <div class="ens-nav-inner">
-      <a href="/" class="ens-nav-logo">enigma<span>·</span>store</a>
+      <ul class="ens-nav-links">
+        <li><a href="#ens-products">Productos</a></li>
+        <li><a href="#ens-routine">Rutina</a></li>
+        <li><a href="#ens-nosotros">Nosotros</a></li>
+      </ul>
+      <a href="/" class="ens-nav-logo">Enigma Store<small>K-Beauty Chile</small></a>
       <div class="ens-nav-actions">
-        <button class="ens-nav-cart-btn" id="ens-cart-toggle" aria-label="Carrito">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 01-8 0"/>
-          </svg>
+        <a href="{{ shop.url }}/collections/all" class="ens-nav-shop">Tienda completa</a>
+        <button class="ens-nav-cart-btn" id="ens-cart-toggle" aria-label="Abrir carrito">
+          🛒 Pedido
           <span class="ens-cart-count" id="ens-cart-count">0</span>
         </button>
-        <a href="/checkout" class="ens-nav-checkout">Ir a Pago</a>
       </div>
     </div>
   </nav>
 
   <!-- ══ HERO ════════════════════════════════════════════ -->
   <section class="ens-hero" aria-label="Hero principal">
-
-    <!-- Columna izquierda: texto / CTA -->
-    <div class="ens-hero-content">
-      <span class="ens-hero-badge">K-Beauty Chile</span>
+    <div class="ens-hero-left">
+      <div class="ens-hero-tag">✦ Importado directo de Corea del Sur</div>
       <h1>
         {% if section.settings.hero_title != blank %}
           {{ section.settings.hero_title }}
         {% else %}
-          Skincare coreano para una <em>piel luminosa</em>
+          Best Korean<br><em>Skincare</em>
         {% endif %}
       </h1>
+      <div class="ens-badge-row">
+        <div class="ens-badge-gold">
+          <span class="ens-badge-pct">100%</span>
+          <span class="ens-badge-word">ORIGINAL</span>
+        </div>
+        <p class="ens-badge-copy">Productos certificados,<br>importados directo desde Corea.<br>Envío a todo Chile 🇨🇱</p>
+      </div>
       <p class="ens-hero-sub">
         {% if section.settings.hero_subtitle != blank %}
           {{ section.settings.hero_subtitle }}
         {% else %}
-          Descubre los rituales de belleza que transforman tu piel. Productos originales directamente de Corea.
+          K-Beauty con ingredientes naturales que hidratan, iluminan y revelan tu luminosidad natural.
         {% endif %}
       </p>
       <div class="ens-hero-ctas">
@@ -1030,133 +1125,112 @@
         </a>
       </div>
       <div class="ens-hero-trust">
-        <div class="ens-trust-item">
+        <div class="ens-hero-trust-item">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
           Productos originales
         </div>
-        <div class="ens-trust-item">
+        <div class="ens-hero-trust-item">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Envío a todo Chile
         </div>
-        <div class="ens-trust-item">
+        <div class="ens-hero-trust-item">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           Pago seguro
         </div>
       </div>
     </div>
 
-    <!-- Columna derecha: imagen hero (nunca se corta) -->
-    <div class="ens-hero-img-col">
-      <picture class="ens-hero-picture">
-        {% if section.settings.hero_image_mobile != blank %}
-          <source
-            media="(max-width: 768px)"
-            srcset="{{ section.settings.hero_image_mobile | img_url: '800x' }}"
-          >
-        {% endif %}
+    <div class="ens-hero-right">
+      <div class="ens-hero-img">
         {% if section.settings.hero_image != blank %}
-          <source
-            media="(min-width: 769px)"
-            srcset="{{ section.settings.hero_image | img_url: '1200x' }}"
-          >
           <img
             src="{{ section.settings.hero_image | img_url: '1200x' }}"
             alt="{{ section.settings.hero_title | default: 'Skincare coreano Enigma Store Chile' }}"
-            loading="eager"
-            fetchpriority="high"
-            width="800" height="1000"
+            loading="eager" fetchpriority="high"
           >
         {% else %}
           <img
             src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKIncare_Coreano_original.png?v=1777427752"
             alt="Skincare coreano Enigma Store Chile"
-            loading="eager"
-            fetchpriority="high"
-            width="800" height="1000"
+            loading="eager" fetchpriority="high"
           >
         {% endif %}
-      </picture>
-
-      <!-- Floating stats card — solo desktop -->
-      <div class="ens-hero-stats" aria-label="Estadísticas">
-        <div class="ens-hero-stat">
-          <div class="ens-hero-stat-num">4.9★</div>
-          <div class="ens-hero-stat-label">Calificación</div>
-        </div>
-        <div class="ens-hero-stat-divider"></div>
-        <div class="ens-hero-stat">
-          <div class="ens-hero-stat-num">+500</div>
-          <div class="ens-hero-stat-label">Clientas felices</div>
-        </div>
-        <div class="ens-hero-stat-divider"></div>
-        <div class="ens-hero-stat">
-          <div class="ens-hero-stat-num">+18</div>
-          <div class="ens-hero-stat-label">Vendidos hoy 🔥</div>
+      </div>
+      <div class="ens-fc ens-fc-1">
+        <div class="ens-fb">Oferta especial</div>
+        <div class="ens-ft">Hasta −31% off</div>
+        <div class="ens-fs">Productos seleccionados</div>
+      </div>
+      <div class="ens-fc ens-fc-2">
+        <div class="ens-g-dot"></div>
+        <div>
+          <div class="ens-g-title">Skin Glow Garantizado</div>
+          <div class="ens-g-sub">Fórmulas K-Beauty</div>
         </div>
       </div>
+      <div class="ens-hero-stats">
+        <div class="ens-hs"><div class="ens-hs-num">4.9★</div><div class="ens-hs-label">Calificación</div></div>
+        <div class="ens-hs-div"></div>
+        <div class="ens-hs"><div class="ens-hs-num">+500</div><div class="ens-hs-label">Clientas</div></div>
+        <div class="ens-hs-div"></div>
+        <div class="ens-hs"><div class="ens-hs-num">+18</div><div class="ens-hs-label">Hoy 🔥</div></div>
+      </div>
     </div>
-
   </section>
 
-  <!-- ══ BRANDS MARQUEE ══════════════════════════════════ -->
-  {% if section.settings.show_brands %}
-  <div class="ens-brands" aria-label="Marcas destacadas">
-    <div class="ens-brands-track" id="ens-brands-track">
-      {% assign brands = "COSRX,INNISFREE,LANEIGE,SOME BY MI,PURITO,ANUA,TORRIDEN,BEAUTY OF JOSEON,KLAIRS,I'M FROM,ROUND LAB,ISNTREE" | split: ',' %}
-      {% for brand in brands %}
-        <span class="ens-brand-name">{{ brand }}</span>
-      {% endfor %}
-      {% for brand in brands %}
-        <span class="ens-brand-name">{{ brand }}</span>
-      {% endfor %}
+  <!-- ══ TRUST STRIP ══════════════════════════════════════ -->
+  <div class="ens-trust-strip">
+    <div class="ens-trust-strip-inner">
+      <div class="ens-trust-strip-item"><span>✅</span> Productos 100% originales</div>
+      <div class="ens-trust-strip-item"><span>🚚</span> Envío a todo Chile</div>
+      <div class="ens-trust-strip-item"><span>🔒</span> Pago 100% seguro</div>
+      <div class="ens-trust-strip-item"><span>💬</span> Soporte WhatsApp</div>
+      <div class="ens-trust-strip-item"><span>↩️</span> Cambios y devoluciones</div>
     </div>
   </div>
-  {% endif %}
 
-  <!-- ══ BENEFITS ════════════════════════════════════════ -->
-  {% if section.settings.show_benefits %}
-  <section class="ens-benefits" aria-labelledby="ens-benefits-title">
-    <div class="ens-container">
-      <p class="ens-section-label">¿Por qué K-Beauty?</p>
-      <h2 class="ens-section-title" id="ens-benefits-title">Resultados que se ven y se sienten</h2>
-      <div class="ens-benefits-grid">
-        <div class="ens-benefit-card">
-          <div class="ens-benefit-icon">✨</div>
-          <h3>Piel luminosa</h3>
-          <p>Formulaciones con ingredientes activos que devuelven el brillo natural de tu piel.</p>
-        </div>
-        <div class="ens-benefit-card">
-          <div class="ens-benefit-icon">💧</div>
-          <h3>Hidratación profunda</h3>
-          <p>Capas de hidratación inspiradas en el método de 10 pasos coreano.</p>
-        </div>
-        <div class="ens-benefit-card">
-          <div class="ens-benefit-icon">🌿</div>
-          <h3>Ingredientes coreanos</h3>
-          <p>Centella, niacinamida, extracto de arroz y más activos respaldados por ciencia.</p>
-        </div>
-        <div class="ens-benefit-card">
-          <div class="ens-benefit-icon">📈</div>
-          <h3>Resultados visibles</h3>
-          <p>Rutinas constantes que transforman la textura y tono de la piel en semanas.</p>
-        </div>
+  <!-- ══ BRANDS MARQUEE ═══════════════════════════════════ -->
+  {% if section.settings.show_brands %}
+  <div class="ens-brands" aria-label="Marcas destacadas">
+    <span class="ens-brands-label">Marcas oficiales disponibles en Enigma Store</span>
+    <div class="ens-brands-marquee">
+      <div class="ens-brands-track">
+        <div class="ens-bi"><div class="ens-brand-name sm">SKIN1004</div><div class="ens-brand-sub">The Untouched Nature</div></div>
+        <div class="ens-bi"><div class="ens-brand-name it">Dr.Althea</div><div class="ens-brand-sub">Derma K-Beauty</div></div>
+        <div class="ens-bi"><div class="ens-brand-name">celimax</div><div class="ens-brand-sub">Noni Extract</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:15px;letter-spacing:.06em">Medicube</div><div class="ens-brand-sub">Advanced Skincare</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:14px">Beauty of Joseon</div><div class="ens-brand-sub">Traditional K-Beauty</div></div>
+        <div class="ens-bi"><div class="ens-brand-name">Mixsoon</div><div class="ens-brand-sub">Bean Fermented</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:14px">Elizavecca</div><div class="ens-brand-sub">K-Beauty Innovator</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:15px">Round Lab</div><div class="ens-brand-sub">Mineral K-Beauty</div></div>
+        <!-- duplicado marquee -->
+        <div class="ens-bi"><div class="ens-brand-name sm">SKIN1004</div><div class="ens-brand-sub">The Untouched Nature</div></div>
+        <div class="ens-bi"><div class="ens-brand-name it">Dr.Althea</div><div class="ens-brand-sub">Derma K-Beauty</div></div>
+        <div class="ens-bi"><div class="ens-brand-name">celimax</div><div class="ens-brand-sub">Noni Extract</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:15px;letter-spacing:.06em">Medicube</div><div class="ens-brand-sub">Advanced Skincare</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:14px">Beauty of Joseon</div><div class="ens-brand-sub">Traditional K-Beauty</div></div>
+        <div class="ens-bi"><div class="ens-brand-name">Mixsoon</div><div class="ens-brand-sub">Bean Fermented</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:14px">Elizavecca</div><div class="ens-brand-sub">K-Beauty Innovator</div></div>
+        <div class="ens-bi"><div class="ens-brand-name" style="font-size:15px">Round Lab</div><div class="ens-brand-sub">Mineral K-Beauty</div></div>
       </div>
     </div>
-  </section>
+  </div>
   {% endif %}
 
   <!-- ══ PRODUCTS ═════════════════════════════════════════ -->
   <section class="ens-products" id="ens-products" aria-labelledby="ens-products-title">
     <div class="ens-container">
-      <p class="ens-section-label">Colección</p>
-      <h2 class="ens-section-title" id="ens-products-title">Productos destacados</h2>
+      <div class="ens-sh ens-reveal">
+        <span class="ens-section-label">Selección K-Beauty · Enigma Store</span>
+        <h2 class="ens-section-title" id="ens-products-title">Elige tus productos y<br><em>arma tu pedido</em></h2>
+        <p class="ens-section-sub">Agrega productos al carrito y procede al checkout seguro 🛒</p>
+      </div>
 
-      <!-- Filter buttons by tag -->
       {% assign collection = section.settings.collection %}
       {% if collection != blank %}
         {% assign all_tags = collection.all_tags %}
         {% if all_tags.size > 0 %}
-        <div class="ens-filters" id="ens-filters" role="group" aria-label="Filtros">
+        <div class="ens-filters ens-reveal" id="ens-filters" role="group" aria-label="Filtros">
           <button class="ens-filter-btn active" data-filter="all">Todos</button>
           {% for tag in all_tags limit: 8 %}
             <button class="ens-filter-btn" data-filter="{{ tag | handle }}">{{ tag }}</button>
@@ -1165,7 +1239,7 @@
         {% endif %}
       {% endif %}
 
-      <div class="ens-products-grid" id="ens-products-grid">
+      <div class="ens-products-grid ens-reveal" id="ens-products-grid">
         {% if collection != blank and collection.products_count > 0 %}
           {% assign products_limit = section.settings.products_limit | default: 12 %}
           {% for product in collection.products limit: products_limit %}
@@ -1175,12 +1249,7 @@
               {% assign has_discount = true %}
               {% assign savings_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price %}
             {% endif %}
-
-            <article
-              class="ens-card"
-              data-tags="{{ product.tags | join: ',' | handleize }}"
-              data-product-id="{{ product.id }}"
-            >
+            <article class="ens-card" data-tags="{{ product.tags | join: ',' | handleize }}" data-product-id="{{ product.id }}">
               <div class="ens-card-img-wrap">
                 {% if has_discount %}
                   <span class="ens-card-badge">-{{ savings_pct }}%</span>
@@ -1189,57 +1258,32 @@
                 {% elsif product.tags contains 'bestseller' or product.tags contains 'best seller' %}
                   <span class="ens-card-badge best">Best seller</span>
                 {% endif %}
-
                 {% if product.featured_image != blank %}
-                  <img
-                    class="ens-card-img"
-                    src="{{ product.featured_image | img_url: '400x400' }}"
-                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                    loading="lazy"
-                    width="400" height="400"
-                  >
+                  <img class="ens-card-img" src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" width="400" height="400">
                   {% if product.images.size > 1 %}
-                    <img
-                      class="ens-card-img-hover"
-                      src="{{ product.images[1] | img_url: '400x400' }}"
-                      alt="{{ product.title | escape }}"
-                      loading="lazy"
-                      width="400" height="400"
-                    >
+                    <img class="ens-card-img-hover" src="{{ product.images[1] | img_url: '400x400' }}" alt="{{ product.title | escape }}" loading="lazy" width="400" height="400">
                   {% endif %}
                 {% else %}
                   <div class="ens-card-img" style="background:var(--ens-beige);display:flex;align-items:center;justify-content:center;height:100%;font-size:48px;">🧴</div>
                 {% endif %}
-
-                <button class="ens-card-wishlist" aria-label="Agregar a favoritos">♡</button>
+                <button class="ens-card-wishlist" aria-label="Favorito" onclick="this.textContent=this.textContent==='♥'?'♡':'♥';this.style.color=this.textContent==='♥'?'var(--ens-rose)':''">♡</button>
               </div>
-
               <div class="ens-card-body">
-                {% if product.vendor != blank %}
-                  <p class="ens-card-vendor">{{ product.vendor }}</p>
-                {% endif %}
+                {% if product.vendor != blank %}<p class="ens-card-vendor">{{ product.vendor }}</p>{% endif %}
                 <h3 class="ens-card-title">{{ product.title }}</h3>
-
-                <div class="ens-card-rating" aria-label="4.8 de 5 estrellas">
+                <div class="ens-card-rating">
                   <span class="ens-stars">★★★★★</span>
                   <span class="ens-rating-count">+32 opiniones</span>
                 </div>
-
                 <div class="ens-card-price">
                   <span class="ens-price-sale">{{ variant.price | money }}</span>
                   {% if has_discount %}
                     <span class="ens-price-compare">{{ variant.compare_at_price | money }}</span>
-                    <span class="ens-price-savings">Ahorra {{ savings_pct }}%</span>
+                    <span class="ens-price-savings">-{{ savings_pct }}%</span>
                   {% endif %}
                 </div>
-
                 <div class="ens-card-actions">
-                  <a
-                    href="{{ product.url }}"
-                    class="ens-btn-view"
-                    aria-label="Ver {{ product.title }}"
-                  >Ver producto</a>
-
+                  <a href="{{ product.url }}" class="ens-btn-view" aria-label="Ver {{ product.title }}">Ver →</a>
                   {% if variant.available %}
                     <button
                       class="ens-btn-atc"
@@ -1264,46 +1308,50 @@
           </div>
         {% endif %}
       </div>
+
+      <div class="ens-view-more-wrap ens-reveal">
+        <a href="{{ shop.url }}/collections/all" target="_blank" class="ens-btn-ghost">Ver todos los productos →</a>
+      </div>
     </div>
   </section>
 
   <!-- ══ ROUTINE ══════════════════════════════════════════ -->
   {% if section.settings.show_routine %}
-  <section class="ens-routine" id="ens-routine" aria-labelledby="ens-routine-title">
+  <section id="ens-routine" aria-labelledby="ens-routine-title">
+    <div class="ens-rutina-sec ens-reveal">
+      <div class="ens-rv">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=700&q=80" alt="Rutina K-Beauty">
+        <div class="ens-skin-glow"></div>
+      </div>
+      <div class="ens-rc">
+        <span class="ens-section-label">Rutina K-Beauty</span>
+        <h2 id="ens-routine-title">Tu <em>glow</em><br>en 4 pasos</h2>
+        <p>La rutina coreana nutre cada capa de tu piel. Resultados visibles desde la primera semana.</p>
+        <div class="ens-steps">
+          <div class="ens-step"><div class="ens-snum">1</div><div><div class="ens-sname">Limpieza Doble</div><div class="ens-sbrand">Celimax · Noni Bubble Cleanser</div></div><div class="ens-sico">🧴</div></div>
+          <div class="ens-step"><div class="ens-snum">2</div><div><div class="ens-sname">Tónico Hidratante</div><div class="ens-sbrand">SKIN1004 · Centella Toning Toner</div></div><div class="ens-sico">💧</div></div>
+          <div class="ens-step"><div class="ens-snum">3</div><div><div class="ens-sname">Sérum / Esencia</div><div class="ens-sbrand">Celimax · Retinol Shot Serum</div></div><div class="ens-sico">✨</div></div>
+          <div class="ens-step"><div class="ens-snum">4</div><div><div class="ens-sname">Hidratante Barrier</div><div class="ens-sbrand">Dr Althea · 345 Relief Cream</div></div><div class="ens-sico">🌿</div></div>
+        </div>
+        <a href="#ens-products" class="ens-btn-primary">Armar mi rutina</a>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ══ BENEFITS ═════════════════════════════════════════ -->
+  {% if section.settings.show_benefits %}
+  <section class="ens-benefits" id="ens-nosotros" aria-labelledby="ens-benefits-title">
     <div class="ens-container">
-      <p class="ens-section-label">Paso a paso</p>
-      <h2 class="ens-section-title" id="ens-routine-title">Tu rutina K-Beauty</h2>
-      <div class="ens-routine-steps">
-        <div class="ens-routine-step">
-          <div class="ens-step-emoji">🧼</div>
-          <div class="ens-step-num">1</div>
-          <h4>Limpieza</h4>
-          <p>Doble limpieza para eliminar impurezas sin dañar la barrera cutánea</p>
-        </div>
-        <div class="ens-routine-step">
-          <div class="ens-step-emoji">💧</div>
-          <div class="ens-step-num">2</div>
-          <h4>Tónico</h4>
-          <p>Prepara la piel y equilibra el pH para absorber mejor los siguientes pasos</p>
-        </div>
-        <div class="ens-routine-step">
-          <div class="ens-step-emoji">✨</div>
-          <div class="ens-step-num">3</div>
-          <h4>Sérum / Esencia</h4>
-          <p>Activos concentrados que tratan manchas, poros y textura desigual</p>
-        </div>
-        <div class="ens-routine-step">
-          <div class="ens-step-emoji">🌸</div>
-          <div class="ens-step-num">4</div>
-          <h4>Hidratante</h4>
-          <p>Sella la hidratación y protege la barrera natural de tu piel todo el día</p>
-        </div>
-        <div class="ens-routine-step">
-          <div class="ens-step-emoji">☀️</div>
-          <div class="ens-step-num">5</div>
-          <h4>Protección solar</h4>
-          <p>Paso obligatorio AM para proteger los resultados de tu rutina</p>
-        </div>
+      <div class="ens-sh ens-reveal">
+        <span class="ens-section-label">¿Por qué Enigma Store?</span>
+        <h2 class="ens-section-title" id="ens-benefits-title">Calidad que <em>se siente</em></h2>
+      </div>
+      <div class="ens-benefits-grid ens-reveal">
+        <div class="ens-benefit-card"><div class="ens-benefit-icon">💧</div><h3>Hidratación Profunda</h3><p>Fórmulas K-Beauty que penetran hasta las capas más profundas para una hidratación duradera.</p></div>
+        <div class="ens-benefit-card"><div class="ens-benefit-icon">🌿</div><h3>Ingredientes Naturales</h3><p>Centella Asiática, Noni, Bean Fermentado — ingredientes con resultados comprobados.</p></div>
+        <div class="ens-benefit-card"><div class="ens-benefit-icon">✦</div><h3>100% Original</h3><p>Importados directamente desde Corea del Sur. Certificados y auténticos, sin intermediarios.</p></div>
+        <div class="ens-benefit-card"><div class="ens-benefit-icon">🚚</div><h3>Envío a Todo Chile</h3><p>Despacho rápido a Santiago y regiones. También visítanos en Dardignac 461, Recoleta.</p></div>
       </div>
     </div>
   </section>
@@ -1312,46 +1360,20 @@
   <!-- ══ SOCIAL PROOF ═════════════════════════════════════ -->
   <section class="ens-social-proof" aria-labelledby="ens-reviews-title">
     <div class="ens-container">
-      <div class="ens-stats-bar">
-        <div class="ens-stat">
-          <div class="ens-stat-num">4.9★</div>
-          <div class="ens-stat-label">Calificación promedio</div>
-        </div>
-        <div class="ens-stat">
-          <div class="ens-stat-num">+500</div>
-          <div class="ens-stat-label">Clientes felices</div>
-        </div>
-        <div class="ens-stat">
-          <div class="ens-stat-label" style="font-size:11px;margin-bottom:4px;">🔥 En vivo ahora</div>
-          <div class="ens-stat-num">+18</div>
-          <div class="ens-stat-label">Vendidos hoy</div>
-        </div>
-        <div class="ens-stat">
-          <div class="ens-stat-num">100%</div>
-          <div class="ens-stat-label">Productos originales</div>
-        </div>
+      <div class="ens-stats-bar ens-reveal">
+        <div class="ens-stat"><div class="ens-stat-num">4.9★</div><div class="ens-stat-label">Calificación promedio</div></div>
+        <div class="ens-stat"><div class="ens-stat-num">+500</div><div class="ens-stat-label">Clientes felices</div></div>
+        <div class="ens-stat"><div class="ens-stat-label" style="font-size:11px;margin-bottom:4px">🔥 En vivo ahora</div><div class="ens-stat-num">+18</div><div class="ens-stat-label">Vendidos hoy</div></div>
+        <div class="ens-stat"><div class="ens-stat-num">100%</div><div class="ens-stat-label">Productos originales</div></div>
       </div>
-
-      <p class="ens-section-label" id="ens-reviews-title">Lo que dicen nuestras clientas</p>
-      <div class="ens-reviews-grid">
-        <div class="ens-review-card">
-          <div class="ens-review-stars">★★★★★</div>
-          <p class="ens-review-text">"Mi piel nunca había estado tan hidratada. Después de 2 semanas ya noto la diferencia. Los poros se ven más cerrados."</p>
-          <div class="ens-review-author">Valentina M.</div>
-          <div class="ens-review-product">COSRX Snail 96 Mucin</div>
-        </div>
-        <div class="ens-review-card">
-          <div class="ens-review-stars">★★★★★</div>
-          <p class="ens-review-text">"Llegó súper rápido y el empaque estaba perfecto. El sérum de niacinamida es increíble, mis manchas han mejorado mucho."</p>
-          <div class="ens-review-author">Camila R.</div>
-          <div class="ens-review-product">Some By Mi Toner Miracle</div>
-        </div>
-        <div class="ens-review-card">
-          <div class="ens-review-stars">★★★★★</div>
-          <p class="ens-review-text">"Compré por primera vez y quedé encantada. El protector solar de Beauty of Joseon no deja sebo ni pantalla blanca. Lo mejor."</p>
-          <div class="ens-review-author">Isidora P.</div>
-          <div class="ens-review-product">Beauty of Joseon SPF 50</div>
-        </div>
+      <div class="ens-sh ens-reveal">
+        <span class="ens-section-label" id="ens-reviews-title">Lo que dicen nuestras clientas</span>
+        <h2 class="ens-section-title">Resultados que <em>enamoran</em></h2>
+      </div>
+      <div class="ens-reviews-grid ens-reveal">
+        <div class="ens-review-card"><div class="ens-review-stars">★★★★★</div><p class="ens-review-text">"Mi piel nunca había estado tan hidratada. Después de 2 semanas ya noto la diferencia. Los poros se ven más cerrados."</p><div class="ens-review-author">Valentina M.</div><div class="ens-review-product">COSRX Snail 96 Mucin</div></div>
+        <div class="ens-review-card"><div class="ens-review-stars">★★★★★</div><p class="ens-review-text">"Llegó súper rápido y el empaque estaba perfecto. El sérum de niacinamida es increíble, mis manchas mejoraron mucho."</p><div class="ens-review-author">Camila R.</div><div class="ens-review-product">Celimax Retinol Serum</div></div>
+        <div class="ens-review-card"><div class="ens-review-stars">★★★★★</div><p class="ens-review-text">"El protector solar de Beauty of Joseon no deja sebo ni pantalla blanca. Lo mejor que he probado."</p><div class="ens-review-author">Isidora P.</div><div class="ens-review-product">Beauty of Joseon SPF 50</div></div>
       </div>
     </div>
   </section>
@@ -1367,107 +1389,119 @@
     </div>
   </div>
 
-  <!-- ══ NEWSLETTER ═══════════════════════════════════════ -->
+  <!-- ══ NEWSLETTER ════════════════════════════════════════ -->
   {% if section.settings.show_newsletter %}
   <section class="ens-newsletter" aria-labelledby="ens-newsletter-title">
     <div class="ens-newsletter-inner">
-      <p class="ens-section-label">Comunidad K-Beauty</p>
-      <h2 id="ens-newsletter-title">Recibe rutinas y ofertas exclusivas</h2>
-      <p>Únete a nuestra comunidad y obtén un <strong>10% de descuento</strong> en tu primera compra.</p>
-      <div class="ens-newsletter-form" role="form">
-        <input
-          class="ens-newsletter-input"
-          type="email"
-          placeholder="tu@email.com"
-          aria-label="Email para newsletter"
-          id="ens-newsletter-email"
-        >
-        <button class="ens-newsletter-submit" id="ens-newsletter-btn">Suscribirme</button>
+      <span class="ens-section-label">Únete al mundo K-Beauty</span>
+      <h2 id="ens-newsletter-title">Eleva tu skincare con<br><em>Enigma Store</em></h2>
+      <p>Suscríbete y recibe un 10% de descuento en tu primera compra + tips de rutinas coreanas.</p>
+      <div class="ens-newsletter-form">
+        <input class="ens-newsletter-input" type="email" placeholder="Tu correo electrónico" id="ens-newsletter-email" aria-label="Email para newsletter">
+        <button class="ens-newsletter-submit" id="ens-newsletter-btn">Quiero mi 10%</button>
       </div>
-      <p class="ens-newsletter-note">Sin spam. Solo beauty tips y ofertas reales. ✨</p>
+      <p class="ens-newsletter-note">Sin spam. Solo lo mejor del K-Beauty para ti.</p>
     </div>
   </section>
   {% endif %}
 
-  <!-- ══ FOOTER ═══════════════════════════════════════════ -->
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
   <footer class="ens-footer" aria-label="Pie de página">
     <div class="ens-footer-inner">
       <div>
-        <div class="ens-footer-brand-name">enigma<span>·</span>store</div>
-        <p class="ens-footer-desc">Tu destino de skincare coreano en Chile. Productos originales importados directamente para tu rutina K-Beauty.</p>
+        <a href="/" class="ens-footer-brand-name">Enigma Store<small style="display:block;font-size:8px;letter-spacing:.28em;font-weight:300;color:rgba(255,255,255,.3);font-family:var(--ens-font-body)">K-Beauty Chile</small></a>
+        <p class="ens-footer-desc">Tu tienda K-Beauty en Chile. Productos originales importados desde Corea del Sur con envío a todo el país.</p>
         <div class="ens-footer-social">
           <a href="https://instagram.com/enigmastore.cl" aria-label="Instagram">📷</a>
           <a href="https://tiktok.com/@enigmastore.cl" aria-label="TikTok">🎵</a>
-          <a href="https://wa.me/56912345678" aria-label="WhatsApp">💬</a>
+          <a href="https://wa.me/56928775107" aria-label="WhatsApp">💬</a>
         </div>
-      </div>
-      <div class="ens-footer-col">
-        <h4>Skincare</h4>
-        <ul>
-          <li><a href="/collections/limpieza">Limpieza</a></li>
-          <li><a href="/collections/tonicos">Tónicos</a></li>
-          <li><a href="/collections/serums">Sérums</a></li>
-          <li><a href="/collections/hidratantes">Hidratantes</a></li>
-          <li><a href="/collections/proteccion-solar">Protección Solar</a></li>
-          <li><a href="/collections/mascarillas">Mascarillas</a></li>
-        </ul>
       </div>
       <div class="ens-footer-col">
         <h4>Marcas</h4>
         <ul>
-          <li><a href="/collections/cosrx">COSRX</a></li>
-          <li><a href="/collections/innisfree">Innisfree</a></li>
-          <li><a href="/collections/laneige">Laneige</a></li>
-          <li><a href="/collections/some-by-mi">Some By Mi</a></li>
-          <li><a href="/collections/beauty-of-joseon">Beauty of Joseon</a></li>
+          <li><a href="{{ shop.url }}/collections/celimax">Celimax</a></li>
+          <li><a href="{{ shop.url }}/collections/mixsoon">Mixsoon</a></li>
+          <li><a href="{{ shop.url }}/collections/skin1004">Skin1004</a></li>
+          <li><a href="{{ shop.url }}/collections/dr-althea">Dr Althea</a></li>
+          <li><a href="{{ shop.url }}/collections/medicube">Medicube</a></li>
+          <li><a href="{{ shop.url }}/collections/beauty-of-joseon">Beauty of Joseon</a></li>
         </ul>
       </div>
       <div class="ens-footer-col">
-        <h4>Ayuda</h4>
+        <h4>Skincare</h4>
         <ul>
-          <li><a href="/pages/preguntas-frecuentes">Preguntas frecuentes</a></li>
-          <li><a href="/pages/envios-y-despachos">Envíos y despachos</a></li>
-          <li><a href="/pages/cambios-y-devoluciones">Cambios y devoluciones</a></li>
-          <li><a href="/pages/terminos-y-condiciones">Términos y condiciones</a></li>
+          <li><a href="{{ shop.url }}/collections/serums">Sérums</a></li>
+          <li><a href="{{ shop.url }}/collections/tonicos">Tónicos</a></li>
+          <li><a href="{{ shop.url }}/collections/hidratantes">Hidratantes</a></li>
+          <li><a href="{{ shop.url }}/collections/proteccion-solar">Solar</a></li>
+          <li><a href="{{ shop.url }}/collections/limpieza">Limpieza</a></li>
+        </ul>
+      </div>
+      <div class="ens-footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/56928775107">WhatsApp +56 9 2877 5107</a></li>
+          <li><a href="mailto:ventas@enigmastore.cl">ventas@enigmastore.cl</a></li>
+          <li><a href="/pages/politicas-de-envio">Política de envíos</a></li>
           <li><a href="/pages/contacto">Contáctanos</a></li>
+          <li><a href="#">📍 Dardignac 461, Recoleta</a></li>
         </ul>
       </div>
     </div>
-    <div class="ens-container">
-      <div class="ens-footer-bottom">
-        <span>© 2025 Enigma Store Chile — Todos los derechos reservados</span>
-        <div class="ens-footer-payments">
-          <span>Métodos de pago:</span>
-          <span class="ens-pay-badge">VISA</span>
-          <span class="ens-pay-badge">MC</span>
-          <span class="ens-pay-badge">WEBPAY</span>
-          <span class="ens-pay-badge">MACH</span>
-        </div>
+    <div class="ens-footer-bottom">
+      <span>© 2025 Enigma Store Chile SpA · RUT 77.397.268-0</span>
+      <div class="ens-footer-payments">
+        <span class="ens-pay-badge">VISA</span>
+        <span class="ens-pay-badge">MC</span>
+        <span class="ens-pay-badge">WEBPAY</span>
+        <span class="ens-pay-badge">FLOW</span>
       </div>
+      <a href="https://enigmastore.cl" style="color:var(--ens-rose);text-decoration:none">www.enigmastore.cl</a>
     </div>
   </footer>
 
-  <!-- ══ SIDE CART ════════════════════════════════════════ -->
+  <!-- ══ CARRITO / SIDE CART DRAWER ════════════════════════ -->
   <div class="ens-cart-overlay" id="ens-cart-overlay" role="presentation"></div>
   <div class="ens-cart-drawer" id="ens-cart-drawer" role="dialog" aria-label="Carrito de compras" aria-modal="true">
     <div class="ens-cart-header">
-      <span class="ens-cart-title">Tu carrito</span>
-      <button class="ens-cart-close" id="ens-cart-close" aria-label="Cerrar carrito">×</button>
+      <span class="ens-cart-title">🛒 Mi Pedido</span>
+      <button class="ens-cart-close" id="ens-cart-close" aria-label="Cerrar carrito">✕</button>
     </div>
     <div class="ens-cart-items" id="ens-cart-items">
       <div class="ens-cart-empty">
-        <div class="ens-cart-empty-icon">🛍️</div>
-        <p>Tu carrito está vacío</p>
-        <p style="margin-top:6px;font-size:12px;">¡Agrega tus productos favoritos!</p>
+        <div class="ens-cart-empty-icon">🌿</div>
+        <p>Tu carrito está vacío.<br>¡Agrega productos para armar tu rutina!</p>
       </div>
     </div>
     <div class="ens-cart-footer" id="ens-cart-footer" style="display:none">
       <div class="ens-cart-subtotal">
-        <span>Subtotal</span>
+        <span>Total estimado</span>
         <span class="ens-cart-subtotal-price" id="ens-cart-total">$0</span>
       </div>
       <p class="ens-cart-shipping-note">🚚 Envío calculado al finalizar la compra</p>
-      <a href="/checkout" class="ens-cart-checkout-btn">Finalizar compra →</a>
+      <a href="/checkout" class="ens-cart-checkout-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Ir a Pago →
+      </a>
+      <button class="ens-cart-wa-btn" id="ens-cart-wa-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar por WhatsApp
+      </button>
+      <!-- medios de pago -->
+      <div class="ens-pay-methods">
+        <p class="ens-pay-label">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pago 100% seguro
+        </p>
+        <div class="ens-pay-logos">
+          <svg class="ens-pay-logo" viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="38" rx="4" fill="#fff" stroke="#e0d8d0" stroke-width="1"/><path d="M22 26L25.5 12h3.5L25.5 26H22zm13.5-14c-.7-.3-1.8-.6-3.1-.6-3.4 0-5.8 1.8-5.8 4.4 0 1.9 1.7 3 3 3.6 1.3.6 1.8 1 1.8 1.6 0 .9-1.1 1.3-2.1 1.3-1.4 0-2.2-.2-3.3-.7l-.5-.2-.5 3c.8.4 2.4.7 4 .7 3.6 0 6-1.8 6-4.6 0-1.5-.9-2.7-3-3.7-1.2-.6-2-.9-2-1.6 0-.5.6-1.1 2-1.1 1.1 0 1.9.2 2.5.5l.3.1.5-2.7zm9.5-.1h-2.6c-.8 0-1.4.2-1.7 1L36 26h3.6s.6-1.6.7-2h4.4c.1.5.4 2 .4 2H48l-3-14.1zm-4.2 9c.3-.7 1.4-3.7 1.4-3.7s.3-.8.5-1.3l.2 1.2s.7 3.2.8 3.8h-2.9zM20 12l-3.4 9.5-.4-1.8C15.5 17.4 13.6 15 11.5 14l3.1 12H18l4.6-14h-3.1z" fill="#1A1F71"/><path d="M13.5 12H8l-.1.4c4.2 1.1 7 3.7 8.2 6.8L15 13c-.2-.8-.8-1-1.5-1z" fill="#F9A533"/></svg>
+          <svg class="ens-pay-logo" viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="38" rx="4" fill="#fff" stroke="#e0d8d0" stroke-width="1"/><circle cx="23" cy="19" r="8" fill="#EB001B"/><circle cx="37" cy="19" r="8" fill="#F79E1B"/><path d="M30 12.7a8 8 0 0 1 0 12.6A8 8 0 0 1 30 12.7z" fill="#FF5F00"/></svg>
+          <svg class="ens-pay-logo" viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="38" rx="4" fill="#fff" stroke="#e0d8d0" stroke-width="1"/><text x="7" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#004B87">web</text><text x="25" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#E30613">pay</text><text x="7" y="31" font-family="Arial,sans-serif" font-size="6" fill="#666">TRANSBANK</text></svg>
+          <svg class="ens-pay-logo" viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="38" rx="4" fill="#fff" stroke="#e0d8d0" stroke-width="1"/><text x="8" y="24" font-family="Arial,sans-serif" font-weight="900" font-size="16" letter-spacing="-1" fill="#1A1A2E">FLOW</text><rect x="8" y="26" width="44" height="2" rx="1" fill="#00B4FF"/></svg>
+        </div>
+      </div>
+      <p class="ens-cart-note">También puedes consultarnos por WhatsApp 🌿</p>
       <button class="ens-cart-continue" id="ens-cart-continue">Seguir comprando</button>
     </div>
   </div>
@@ -1478,42 +1512,39 @@
     <span id="ens-toast-msg">Producto agregado</span>
   </div>
 
-  <!-- ══ WHATSAPP ══════════════════════════════════════════ -->
-  <a
-    href="https://wa.me/56912345678?text=Hola!%20Me%20interesa%20un%20producto%20de%20skincare%20coreano"
-    class="ens-whatsapp"
-    target="_blank"
-    rel="noopener"
-    aria-label="Contactar por WhatsApp"
-  >
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
+  <!-- ══ WHATSAPP FLOAT ════════════════════════════════════ -->
+  <a href="https://wa.me/56928775107?text=Hola!%20Me%20interesa%20un%20producto%20de%20skincare%20coreano" class="ens-whatsapp" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="27" height="27"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
 </div><!-- /ens-landing -->
 
+<!-- ══════════════════════════════════════════════════════════
+   JAVASCRIPT — TODA LA LÓGICA FUNCIONAL SHOPIFY
+══════════════════════════════════════════════════════════ -->
 <script>
 (function() {
   'use strict';
 
-  /* ─── State ──────────────────────────────────────────── */
-  let ens_cart = { items: [], item_count: 0, total_price: 0 };
+  const WA_NUM = '56928775107';
 
-  /* ─── DOM Refs ───────────────────────────────────────── */
+  /* ─── DOM refs ───────────────────────────────────────── */
   const $ = id => document.getElementById(id);
-  const cartDrawer   = $('ens-cart-drawer');
-  const cartOverlay  = $('ens-cart-overlay');
-  const cartItems    = $('ens-cart-items');
-  const cartFooter   = $('ens-cart-footer');
-  const cartTotal    = $('ens-cart-total');
-  const cartCount    = $('ens-cart-count');
-  const toast        = $('ens-toast');
-  const toastMsg     = $('ens-toast-msg');
+  const cartDrawer  = $('ens-cart-drawer');
+  const cartOverlay = $('ens-cart-overlay');
+  const cartItems   = $('ens-cart-items');
+  const cartFooter  = $('ens-cart-footer');
+  const cartTotal   = $('ens-cart-total');
+  const cartCount   = $('ens-cart-count');
+  const toast       = $('ens-toast');
+  const toastMsg    = $('ens-toast-msg');
 
   /* ─── Money formatter ────────────────────────────────── */
-  function formatMoney(cents) {
+  function fmt(cents) {
     return '$' + new Intl.NumberFormat('es-CL').format(Math.round(cents / 100));
+  }
+  function fmtRaw(n) {
+    return '$' + new Intl.NumberFormat('es-CL').format(n);
   }
 
   /* ─── Toast ──────────────────────────────────────────── */
@@ -1527,12 +1558,58 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
   }
 
+  /* ─── Fly-to-cart animation ──────────────────────────── */
+  function flyToCart(imgSrc, originEl) {
+    const size = 68;
+    let sx, sy;
+    if (originEl) {
+      const r = originEl.getBoundingClientRect();
+      sx = Math.max(0, Math.min(r.left, window.innerWidth)) + (r.width || size) / 2 - size / 2;
+      sy = Math.max(0, Math.min(r.top, window.innerHeight)) + (r.height || size) / 2 - size / 2;
+    } else {
+      sx = window.innerWidth / 2 - size / 2;
+      sy = window.innerHeight / 2 - size / 2;
+    }
+    const badge = cartCount;
+    const br = badge.getBoundingClientRect();
+    const ex = br.left + br.width / 2 - size / 2;
+    const ey = br.top + br.height / 2 - size / 2;
+    const fly = document.createElement('img');
+    fly.src = imgSrc;
+    fly.className = 'ens-fly-img';
+    fly.style.cssText = `width:${size}px;height:${size}px;left:${sx}px;top:${sy}px;`;
+    document.body.appendChild(fly);
+    const cpX = sx + (ex - sx) * 0.15;
+    const cpY = Math.min(sy, ey) - Math.abs(ex - sx) * 0.55;
+    const dur = 850, steps = 55, dt = dur / steps;
+    let step = 0;
+    const iv = setInterval(() => {
+      step++;
+      const t = step / steps;
+      const te = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      const bx = Math.pow(1 - te, 2) * sx + 2 * (1 - te) * te * cpX + Math.pow(te, 2) * ex;
+      const by = Math.pow(1 - te, 2) * sy + 2 * (1 - te) * te * cpY + Math.pow(te, 2) * ey;
+      const sc = Math.max(0.12, 1 - te * 0.88);
+      const op = te > 0.7 ? 1 - (te - 0.7) / 0.3 : 1;
+      fly.style.cssText = `width:${size * sc}px;height:${size * sc}px;left:${bx}px;top:${by}px;opacity:${op};border-radius:50%;object-fit:cover;pointer-events:none;z-index:9999;box-shadow:0 4px 20px rgba(30,21,16,.3);position:fixed;`;
+      if (step >= steps) {
+        clearInterval(iv);
+        fly.remove();
+        cartCount.classList.remove('bump');
+        void cartCount.offsetWidth;
+        cartCount.classList.add('bump');
+        setTimeout(() => cartCount.classList.remove('bump'), 400);
+        const cb = document.querySelector('.ens-nav-cart-btn');
+        if (cb) { cb.classList.add('ens-bounce'); setTimeout(() => cb.classList.remove('ens-bounce'), 500); }
+      }
+    }, dt);
+  }
+
   /* ─── Cart open / close ──────────────────────────────── */
   function openCart() {
     cartDrawer.classList.add('open');
     cartOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    cartDrawer.focus();
   }
   function closeCart() {
     cartDrawer.classList.remove('open');
@@ -1544,67 +1621,52 @@
   $('ens-cart-close').addEventListener('click', closeCart);
   $('ens-cart-continue').addEventListener('click', closeCart);
   cartOverlay.addEventListener('click', closeCart);
-
-  /* Keyboard close */
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeCart();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
 
   /* ─── Render cart ────────────────────────────────────── */
+  let ens_cart_state = { items: [], item_count: 0, total_price: 0 };
+
   function renderCart(cart) {
-    ens_cart = cart;
-
-    /* Count */
+    ens_cart_state = cart;
     cartCount.textContent = cart.item_count;
-    cartCount.classList.add('bump');
-    setTimeout(() => cartCount.classList.remove('bump'), 300);
 
-    /* Empty state */
     if (!cart.items || cart.items.length === 0) {
       cartItems.innerHTML = `
         <div class="ens-cart-empty">
-          <div class="ens-cart-empty-icon">🛍️</div>
-          <p>Tu carrito está vacío</p>
-          <p style="margin-top:6px;font-size:12px;">¡Agrega tus productos favoritos!</p>
+          <div class="ens-cart-empty-icon">🌿</div>
+          <p>Tu carrito está vacío.<br>¡Agrega productos para armar tu rutina!</p>
         </div>`;
       cartFooter.style.display = 'none';
       return;
     }
 
     cartFooter.style.display = 'block';
-    cartTotal.textContent = formatMoney(cart.total_price);
+    cartTotal.textContent = fmt(cart.total_price);
 
-    /* Items */
     cartItems.innerHTML = cart.items.map((item, idx) => `
-      <div class="ens-cart-item" data-key="${item.key}" data-idx="${idx}">
-        <img
-          class="ens-cart-item-img"
-          src="${item.image || 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1 1\'><rect fill=\'%23F2E8E1\'/></svg>'}"
-          alt="${(item.product_title || '').replace(/"/g,'&quot;')}"
+      <div class="ens-cart-item" data-key="${item.key}">
+        <img class="ens-cart-item-img"
+          src="${item.image || ''}"
+          alt="${(item.product_title || '').replace(/"/g, '&quot;')}"
           loading="lazy"
         >
         <div class="ens-cart-item-info">
           <div class="ens-cart-item-vendor">${item.vendor || ''}</div>
           <div class="ens-cart-item-title">${item.product_title || item.title}</div>
           <div class="ens-cart-item-controls">
-            <button class="ens-qty-btn ens-qty-minus" data-key="${item.key}" data-qty="${item.quantity - 1}" aria-label="Disminuir cantidad">−</button>
+            <button class="ens-qty-btn" data-key="${item.key}" data-qty="${item.quantity - 1}" aria-label="Disminuir">−</button>
             <span class="ens-qty-val">${item.quantity}</span>
-            <button class="ens-qty-btn ens-qty-plus" data-key="${item.key}" data-qty="${item.quantity + 1}" aria-label="Aumentar cantidad">+</button>
+            <button class="ens-qty-btn" data-key="${item.key}" data-qty="${item.quantity + 1}" aria-label="Aumentar">+</button>
+            <button class="ens-cart-remove" data-key="${item.key}" aria-label="Eliminar" style="margin-left:6px">🗑</button>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <span class="ens-cart-item-price">${formatMoney(item.final_line_price)}</span>
-          <button class="ens-cart-remove" data-key="${item.key}" aria-label="Eliminar producto">×</button>
-        </div>
+        <div class="ens-cart-item-price">${fmt(item.final_line_price)}</div>
       </div>
     `).join('');
 
-    /* Qty & remove event delegation */
     cartItems.querySelectorAll('.ens-qty-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const key = btn.dataset.key;
-        const qty = parseInt(btn.dataset.qty, 10);
-        changeCartItem(key, Math.max(0, qty));
+        changeCartItem(btn.dataset.key, Math.max(0, parseInt(btn.dataset.qty, 10)));
       });
     });
     cartItems.querySelectorAll('.ens-cart-remove').forEach(btn => {
@@ -1620,10 +1682,12 @@
       .catch(() => null);
   }
 
-  /* ─── Add to cart ────────────────────────────────────── */
+  /* ─── Add to cart (Shopify AJAX) ────────────────────── */
   function addToCart(variantId, btn) {
     btn.classList.add('loading');
     btn.textContent = '...';
+    const imgSrc = btn.dataset.productImg || '';
+    const originEl = btn.closest('.ens-card')?.querySelector('.ens-card-img') || btn;
 
     return fetch('/cart/add.js', {
       method: 'POST',
@@ -1639,8 +1703,9 @@
       btn.classList.remove('loading');
       btn.classList.add('success');
       btn.textContent = '✓ Agregado';
-      showToast('¡Producto agregado al carrito!');
-      openCart();
+      flyToCart(imgSrc, originEl);
+      showToast('¡Producto agregado! 🌿');
+      /* NO abre el carrito — solo fly + bounce + toast */
       setTimeout(() => {
         btn.classList.remove('success');
         btn.textContent = 'Agregar';
@@ -1655,7 +1720,7 @@
     });
   }
 
-  /* ─── Change cart item ───────────────────────────────── */
+  /* ─── Change cart item (Shopify AJAX) ───────────────── */
   function changeCartItem(key, qty) {
     fetch('/cart/change.js', {
       method: 'POST',
@@ -1667,7 +1732,7 @@
     .catch(err => { showToast('Error actualizando carrito', true); console.error(err); });
   }
 
-  /* ─── Bind ATC buttons ───────────────────────────────── */
+  /* ─── Bind ATC buttons (Shopify variant IDs) ─────────── */
   function bindAtcButtons() {
     document.querySelectorAll('.ens-btn-atc:not(.disabled)').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -1679,16 +1744,12 @@
   }
 
   /* ─── Filter buttons ─────────────────────────────────── */
-  const filterBtns = document.querySelectorAll('.ens-filter-btn');
-  const productCards = document.querySelectorAll('.ens-card[data-tags]');
-
-  filterBtns.forEach(btn => {
+  document.querySelectorAll('.ens-filter-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.ens-filter-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
       const filter = this.dataset.filter;
-
-      productCards.forEach(card => {
+      document.querySelectorAll('.ens-card[data-tags]').forEach(card => {
         if (filter === 'all') {
           card.style.display = '';
         } else {
@@ -1699,40 +1760,49 @@
     });
   });
 
-  /* ─── Wishlist toggle ────────────────────────────────── */
-  document.querySelectorAll('.ens-card-wishlist').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const isFav = this.textContent === '♥';
-      this.textContent = isFav ? '♡' : '♥';
-      this.style.color = isFav ? '' : 'var(--ens-rose)';
+  /* ─── WhatsApp cart button ───────────────────────────── */
+  const waBtn = $('ens-cart-wa-btn');
+  if (waBtn) {
+    waBtn.addEventListener('click', function() {
+      if (!ens_cart_state.items || ens_cart_state.items.length === 0) return;
+      const total = ens_cart_state.total_price;
+      let msg = '¡Hola Enigma Store! 👋 Me gustaría hacer el siguiente pedido:\n\n';
+      ens_cart_state.items.forEach(i => {
+        msg += `• ${i.quantity}x ${i.product_title}\n  Precio: ${fmt(i.final_line_price)}\n\n`;
+      });
+      msg += `━━━━━━━━━━━━━━\n💰 *TOTAL: ${fmt(total)}*\n\n¿Me pueden confirmar disponibilidad y coordinar pago? 🌿`;
+      window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
     });
-  });
+  }
 
-  /* ─── Newsletter submit ──────────────────────────────── */
-  const newsletterBtn = $('ens-newsletter-btn');
-  if (newsletterBtn) {
-    newsletterBtn.addEventListener('click', function() {
+  /* ─── Newsletter ─────────────────────────────────────── */
+  const nlBtn = $('ens-newsletter-btn');
+  if (nlBtn) {
+    nlBtn.addEventListener('click', function() {
       const email = $('ens-newsletter-email');
       if (!email || !email.value || !email.value.includes('@')) {
-        showToast('Ingresa un email válido', true);
-        return;
+        showToast('Ingresa un email válido', true); return;
       }
-      showToast('¡Suscripción confirmada! Revisa tu email 📩');
+      showToast('¡Suscripción confirmada! Revisa tu correo 📩');
       email.value = '';
     });
   }
 
-  /* ─── Smooth scroll for anchor links ────────────────── */
+  /* ─── Smooth scroll anchors ──────────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function(e) {
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
+
+  /* ─── Scroll reveal ──────────────────────────────────── */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.ens-reveal').forEach(r => revealObs.observe(r));
 
   /* ─── Init ───────────────────────────────────────────── */
   fetchCart();
@@ -1783,13 +1853,13 @@
       "type": "text",
       "id": "hero_title",
       "label": "Título del hero",
-      "default": "Skincare coreano para una piel luminosa"
+      "default": "Best Korean Skincare"
     },
     {
       "type": "textarea",
       "id": "hero_subtitle",
       "label": "Subtítulo del hero",
-      "default": "Descubre los rituales de belleza que transforman tu piel. Productos originales directamente de Corea."
+      "default": "K-Beauty con ingredientes naturales que hidratan, iluminan y revelan tu luminosidad natural."
     },
     {
       "type": "text",

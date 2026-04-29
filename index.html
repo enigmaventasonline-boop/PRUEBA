@@ -497,6 +497,50 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
   .hero-card-bottom{bottom:86px;right:-22px;}
 }
 
+
+
+/* =========================
+   HERO PREMIUM +20% · SAFE OVERRIDE
+   ========================= */
+@media (min-width:901px){
+  .hero-pro{
+    grid-template-columns:0.86fr 1.14fr;
+    gap:30px;
+    padding-right:38px;
+  }
+  .hero-pro-visual{
+    min-height:720px;
+    justify-content:center;
+    align-items:center;
+    overflow:visible;
+  }
+  .hero-product-card{
+    width:min(792px,100%);
+    height:780px;
+    border-radius:38px;
+    background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(255,255,255,.44));
+    box-shadow:0 36px 90px rgba(66,69,48,.18);
+    overflow:hidden;
+  }
+  .hero-product-card img{
+    padding:0;
+    transform:scale(1.04) translateY(12px);
+    filter:drop-shadow(0 34px 58px rgba(66,69,48,.20));
+  }
+  .hero-pro-visual::before{
+    content:'';
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,239,205,.70) 0%,rgba(224,145,50,.18) 38%,transparent 72%);
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero-card-top{top:92px;left:-34px;}
+  .hero-card-bottom{bottom:92px;right:-28px;}
+}
+
 </style>
 </head>
 <body>

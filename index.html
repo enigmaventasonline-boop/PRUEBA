@@ -4,81 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Enigma Store</title>
+<title>Enigma Store Chile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+
 :root{
   --cream:#FFEFCD;
-  --blush:#F5E6D3;
   --rose:#E09132;
   --deep:#424530;
   --muted:#A58E74;
+  --white:#fff;
 }
 
+/* BASE */
 body{
-  margin:0;
   font-family:'DM Sans',sans-serif;
   background:var(--cream);
+  color:var(--deep);
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 40px;
+  background:#fff;
+  z-index:10;
 }
 
 /* HERO */
 .hero{
+  min-height:100vh;
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
-  padding:80px 40px;
-  min-height:100vh;
+  padding:120px 40px 60px;
 }
 
+/* TEXTO */
 .hero-title{
-  font-size:60px;
-  color:var(--deep);
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;
+  line-height:1;
 }
 
 .hero-sub{
+  margin:20px 0;
   color:var(--muted);
-  margin:15px 0;
 }
 
 /* BOTONES */
-.btn{
-  padding:14px 25px;
-  border-radius:30px;
-  border:none;
-  cursor:pointer;
-}
-
 .btn-primary{
   background:var(--rose);
   color:#fff;
+  padding:14px 28px;
+  border-radius:30px;
+  text-decoration:none;
 }
 
 /* STATS */
 .hero-stats{
   display:flex;
-  gap:14px;
-  margin-top:25px;
-  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
 }
 
 .stat-card{
   background:rgba(255,255,255,.7);
-  backdrop-filter:blur(10px);
-  padding:16px 22px;
-  border-radius:14px;
-  min-width:140px;
-  transition:.3s;
-}
-
-.stat-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  padding:14px 18px;
+  border-radius:12px;
 }
 
 .stat-card strong{
-  font-size:22px;
-  color:var(--deep);
+  display:block;
+  font-size:20px;
 }
 
 .stat-card span{
@@ -89,9 +94,17 @@ body{
 /* IMAGEN */
 .hero-img img{
   width:100%;
-  max-width:600px;
-  display:block;
+  max-width:580px;
   margin:auto;
+  display:block;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
 }
 
 </style>
@@ -99,19 +112,22 @@ body{
 
 <body>
 
+<nav>Enigma Store</nav>
+
 <section class="hero">
 
+  <!-- TEXTO -->
   <div>
+
     <h1 class="hero-title">
-      Skincare coreano<br>
-      para una piel glow
+      Best Korean<br><em>Skincare</em>
     </h1>
 
     <p class="hero-sub">
-      Rutinas coreanas seleccionadas para hidratar, iluminar y fortalecer tu piel.
+      Skincare coreano original con resultados visibles desde la primera semana.
     </p>
 
-    <button class="btn btn-primary">Ver productos</button>
+    <a href="#" class="btn-primary">Ver productos</a>
 
     <!-- STATS -->
     <div class="hero-stats">
@@ -135,6 +151,7 @@ body{
 
   </div>
 
+  <!-- IMAGEN -->
   <div class="hero-img">
     <img src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKIncare_Coreano_original.png?v=1777427752">
   </div>
@@ -142,25 +159,34 @@ body{
 </section>
 
 <script>
-const counters = document.querySelectorAll('.count');
 
-counters.forEach(counter => {
-  const updateCount = () => {
-    const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText;
+/* CONTADOR */
+document.addEventListener("DOMContentLoaded", () => {
 
-    const increment = target / 60;
+  const counters = document.querySelectorAll('.count');
 
-    if(count < target){
-      counter.innerText = Math.ceil(count + increment);
-      setTimeout(updateCount, 20);
-    } else {
-      counter.innerText = target.toLocaleString('es-CL');
-    }
-  };
+  counters.forEach(counter => {
 
-  updateCount();
+    const update = () => {
+      const target = +counter.getAttribute('data-target');
+      const current = +counter.innerText;
+
+      const increment = target / 60;
+
+      if(current < target){
+        counter.innerText = Math.ceil(current + increment);
+        setTimeout(update, 20);
+      } else {
+        counter.innerText = target.toLocaleString('es-CL');
+      }
+    };
+
+    update();
+
+  });
+
 });
+
 </script>
 
 </body>

@@ -321,6 +321,171 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
 .brands .bi:hover .bs{
   color:var(--rose);
 }
+
+
+/* =========================
+   HERO PROFESIONAL · SAFE OVERRIDE
+   ========================= */
+.hero-pro{
+  min-height:100vh;
+  grid-template-columns:minmax(0,1fr) minmax(360px,560px);
+  gap:34px;
+  padding:120px 54px 72px;
+  background:
+    radial-gradient(circle at 80% 16%, rgba(224,145,50,.18), transparent 34%),
+    radial-gradient(circle at 18% 82%, rgba(165,142,116,.20), transparent 36%),
+    linear-gradient(135deg,#FFEFCD 0%,#F5E6D3 48%,#FFFFFF 100%);
+}
+.hero-pro::before{
+  content:'';
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(66,69,48,.08);
+  border-radius:32px;
+  pointer-events:none;
+}
+.hero-pro::after{
+  background:radial-gradient(circle,rgba(224,145,50,.16) 0%,transparent 68%);
+}
+.hero-pro-copy{max-width:630px;position:relative;z-index:3}
+.hero-pro .hero-tag{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(224,145,50,.26);
+  color:var(--rose);
+  box-shadow:0 10px 30px rgba(66,69,48,.06);
+}
+.hero-pro .hero-title{
+  font-size:clamp(52px,6.6vw,92px);
+  line-height:.94;
+  max-width:720px;
+}
+.hero-pro .hero-title em{color:var(--rose);font-weight:400}
+.hero-pro .hero-sub{max-width:500px;color:rgba(66,69,48,.72);font-size:15px;margin-bottom:22px}
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  max-width:520px;
+  margin:0 0 18px;
+}
+.hero-stat{
+  background:rgba(255,255,255,.66);
+  border:1px solid rgba(66,69,48,.10);
+  border-radius:18px;
+  padding:14px 15px;
+  box-shadow:0 12px 34px rgba(66,69,48,.06);
+}
+.hero-stat strong{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+  line-height:1;
+  color:var(--deep);
+  font-weight:700;
+}
+.hero-stat span{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.hero-seals{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 26px}
+.hero-seal{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(66,69,48,.08);
+  color:var(--deep);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+.hero-seal span{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--deep);
+  color:#fff;
+  font-size:11px;
+}
+.hero-pro .btn-primary{background:var(--rose);box-shadow:0 14px 30px rgba(224,145,50,.26)}
+.hero-pro .btn-primary:hover{background:var(--deep);box-shadow:0 14px 30px rgba(66,69,48,.24)}
+.hero-pro .btn-ghost{background:rgba(255,255,255,.48);backdrop-filter:blur(10px)}
+.hero-pro-visual{min-height:560px;align-items:center;position:relative}
+.hero-product-card{
+  width:min(520px,100%);
+  height:560px;
+  border-radius:34px;
+  background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,255,255,.38));
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 30px 80px rgba(66,69,48,.16);
+  overflow:hidden;
+  position:relative;
+}
+.hero-product-card::after{
+  content:'';
+  position:absolute;
+  inset:auto 28px 22px;
+  height:90px;
+  border-radius:50%;
+  background:rgba(66,69,48,.12);
+  filter:blur(28px);
+  z-index:0;
+}
+.hero-product-card img{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  padding:24px;
+  filter:drop-shadow(0 24px 34px rgba(66,69,48,.18));
+}
+.hero-floating-card{
+  position:absolute;
+  z-index:4;
+  background:rgba(255,255,255,.90);
+  border:1px solid rgba(255,255,255,.86);
+  box-shadow:0 18px 48px rgba(66,69,48,.14);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:14px 16px;
+}
+.hero-card-top{top:72px;left:-18px}
+.hero-card-bottom{bottom:68px;right:-14px;display:flex;align-items:center;gap:12px}
+.hero-card-kicker{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);font-weight:700;margin-bottom:4px}
+.hero-card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--deep);line-height:1}
+.hero-card-sub{font-size:10px;color:var(--muted);margin-top:5px}
+.hero-mini-chart{display:flex;align-items:end;gap:4px;width:34px;height:34px;padding:5px;border-radius:10px;background:rgba(224,145,50,.12)}
+.hero-mini-chart span{display:block;width:7px;border-radius:8px;background:var(--rose)}
+@media(max-width:900px){
+  .hero-pro{grid-template-columns:1fr;padding:96px 18px 54px;text-align:center;gap:18px}
+  .hero-pro::before{inset:8px;border-radius:24px}
+  .hero-pro .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-stats{grid-template-columns:1fr 1fr 1fr;gap:7px;margin-left:auto;margin-right:auto}
+  .hero-stat{padding:10px 8px;border-radius:14px}
+  .hero-stat strong{font-size:23px}
+  .hero-stat span{font-size:8px}
+  .hero-seals{justify-content:center}
+  .hero-pro .hero-right{display:flex;min-height:auto;margin-top:20px}
+  .hero-product-card{height:360px;border-radius:26px}
+  .hero-card-top{top:18px;left:8px;text-align:left}
+  .hero-card-bottom{bottom:18px;right:8px;text-align:left}
+}
+@media(max-width:520px){
+  .hero-stats{grid-template-columns:1fr}
+  .hero-floating-card{display:none}
+  .hero-product-card{height:320px}
+}
+
 </style>
 </head>
 <body>
@@ -343,35 +508,60 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">✦ Importado directo de Corea del Sur</div>
-    <h1 class="hero-title">Best Korean<br><em>Skincare</em></h1>
-    <div class="badge-row">
-      <div class="badge-gold">
-        <span class="badge-pct">100%</span>
-        <span class="badge-word">ORIGINAL</span>
+<section class="hero hero-pro">
+  <div class="hero-left hero-pro-copy">
+    <div class="hero-tag">✦ K-Beauty original · Importado desde Corea</div>
+    <h1 class="hero-title">Skincare coreano<br><em>para una piel glow</em></h1>
+    <p class="hero-sub">Rutinas coreanas seleccionadas para hidratar, iluminar y fortalecer la barrera de tu piel con productos originales disponibles en Enigma Store Chile.</p>
+
+    <div class="hero-stats" aria-label="Beneficios y estadísticas de confianza">
+      <div class="hero-stat">
+        <strong>57+</strong>
+        <span>productos K-Beauty</span>
       </div>
-      <p class="badge-copy">Productos certificados,<br>importados directo desde Corea.<br>Envío a todo Chile 🇨🇱</p>
+      <div class="hero-stat">
+        <strong>100%</strong>
+        <span>originales</span>
+      </div>
+      <div class="hero-stat">
+        <strong>24/48h</strong>
+        <span>despacho RM*</span>
+      </div>
     </div>
-    <p class="hero-sub">K-Beauty con ingredientes naturales que hidratan, iluminan y revelan tu luminosidad natural. Fórmulas probadas para todo tipo de piel.</p>
+
+    <div class="hero-seals" aria-label="Sellos de garantía">
+      <div class="hero-seal"><span>✓</span> Compra segura</div>
+      <div class="hero-seal"><span>✓</span> Envío a todo Chile</div>
+      <div class="hero-seal"><span>✓</span> Asesoría de rutina</div>
+    </div>
+
     <div class="hero-btns">
       <a href="#productos" class="btn-primary">Ver productos</a>
-      <a href="#rutina" class="btn-ghost">Mi rutina K-Beauty</a>
+      <a href="#rutina" class="btn-ghost">Crear mi rutina</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-img">
-      <img src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/Diseno_sin_titulo_10_04faa3a9-4967-425c-96e2-faf3b5170915.png?v=1777242200" alt="Modelo K-Beauty skin glow">
+
+  <div class="hero-right hero-pro-visual">
+    <div class="hero-img hero-product-card">
+      <img src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKIncare_Coreano_original.png?v=1777427752" alt="Skincare coreano original Enigma Store">
     </div>
-    <div class="fc fc-1">
-      <div class="fb">Oferta especial</div>
-      <div class="ft">Hasta −26% off</div>
-      <div class="fs">Productos seleccionados</div>
+
+    <div class="hero-floating-card hero-card-top">
+      <div class="hero-card-kicker">Garantía</div>
+      <div class="hero-card-title">Productos originales</div>
+      <div class="hero-card-sub">Selección K-Beauty importada</div>
     </div>
-    <div class="fc fc-2">
-      <div class="g-dot"></div>
-      <div><div class="g-title">Skin Glow Garantizado</div><div class="g-sub">Fórmulas K-Beauty</div></div>
+
+    <div class="hero-floating-card hero-card-bottom">
+      <div class="hero-mini-chart">
+        <span style="height:42%"></span>
+        <span style="height:68%"></span>
+        <span style="height:88%"></span>
+      </div>
+      <div>
+        <div class="hero-card-title">+ Glow visible</div>
+        <div class="hero-card-sub">Rutinas por tipo de piel</div>
+      </div>
     </div>
   </div>
 </section>

@@ -581,6 +581,36 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
   }
 }
 
+
+
+/* =========================
+   REVIEWS + REFERENCIAS DE USO
+   ========================= */
+.reviews-sec{padding:88px 40px;background:linear-gradient(180deg,var(--cream) 0%,var(--blush) 100%)}
+.reviews-wrap{max-width:1120px;margin:0 auto}
+.trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 auto 46px;max-width:900px}
+.trust-pill{background:rgba(255,255,255,.75);border:1px solid rgba(165,142,116,.22);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(66,69,48,.06)}
+.trust-ico{width:34px;height:34px;border-radius:50%;background:rgba(224,145,50,.12);display:flex;align-items:center;justify-content:center;color:var(--rose);font-size:17px;flex-shrink:0}
+.trust-title{font-size:12px;font-weight:700;color:var(--deep);letter-spacing:.02em}
+.trust-sub{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.review-card{background:var(--white);border-radius:18px;padding:22px;box-shadow:0 14px 38px rgba(66,69,48,.08);border:1px solid rgba(165,142,116,.14);transition:transform .28s ease,box-shadow .28s ease}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 18px 48px rgba(66,69,48,.12)}
+.review-stars{color:#E09132;font-size:14px;letter-spacing:.08em;margin-bottom:10px}
+.review-text{font-size:13px;line-height:1.75;color:var(--text);font-weight:300;margin-bottom:16px}
+.review-product{display:inline-flex;align-items:center;gap:6px;background:rgba(224,145,50,.10);color:var(--deep);border-radius:999px;padding:6px 10px;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.review-person{display:flex;align-items:center;gap:10px;border-top:1px solid rgba(165,142,116,.16);padding-top:14px}
+.review-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--muted));color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.review-name{font-size:12px;font-weight:700;color:var(--deep)}
+.review-meta{font-size:10px;color:var(--muted);margin-top:1px}
+.use-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+.use-card{background:rgba(255,255,255,.64);border:1px solid rgba(165,142,116,.18);border-radius:16px;padding:18px;text-align:left;transition:all .25s ease}
+.use-card:hover{background:#fff;transform:translateY(-3px)}
+.use-num{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--rose);font-weight:700;margin-bottom:8px}
+.use-title{font-size:13px;font-weight:700;color:var(--deep);margin-bottom:6px}
+.use-desc{font-size:11px;line-height:1.6;color:var(--muted);font-weight:300}
+@media(max-width:900px){.reviews-sec{padding:60px 18px}.trust-strip,.review-grid,.use-grid{grid-template-columns:1fr}.trust-strip{margin-bottom:34px}.review-grid{gap:14px}}
+
 </style>
 </head>
 <body>
@@ -763,6 +793,54 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:48px 40px 26px}
     <div class="bcard"><div class="bico">🌿</div><div class="btitle">Ingredientes Naturales</div><div class="bdesc">Centella Asiática, Noni, Bean Fermentado y más — ingredientes coreanos con resultados comprobados.</div></div>
     <div class="bcard"><div class="bico">✦</div><div class="btitle">100% Original</div><div class="bdesc">Importados directamente desde Corea del Sur. Certificados y auténticos, sin intermediarios.</div></div>
     <div class="bcard"><div class="bico">🚚</div><div class="btitle">Envío a Todo Chile</div><div class="bdesc">Despacho rápido a Santiago y regiones. También visítanos en Dardignac 461, Recoleta.</div></div>
+  </div>
+</section>
+
+
+<!-- REVIEWS + REFERENCIAS DE USO -->
+<section class="reviews-sec" id="reviews">
+  <div class="reviews-wrap">
+    <div class="sh reveal">
+      <span class="st">Confianza real · Uso diario</span>
+      <h2 class="stitle">Rutinas que se adaptan<br><em>a cada piel</em></h2>
+      <p class="ssub">Referencias de uso para orientar mejor la compra: hidratación, manchas, piel sensible y control de brillo.</p>
+    </div>
+
+    <div class="trust-strip reveal">
+      <div class="trust-pill"><div class="trust-ico">✓</div><div><div class="trust-title">Compra segura</div><div class="trust-sub">Pedido online con atención por WhatsApp.</div></div></div>
+      <div class="trust-pill"><div class="trust-ico">✦</div><div><div class="trust-title">Productos originales</div><div class="trust-sub">K-Beauty seleccionado para tu rutina.</div></div></div>
+      <div class="trust-pill"><div class="trust-ico">🚚</div><div><div class="trust-title">Despacho a todo Chile</div><div class="trust-sub">Envíos a Santiago y regiones.</div></div></div>
+    </div>
+
+    <div class="review-grid reveal">
+      <article class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-product">SKIN1004 · Centella</div>
+        <p class="review-text">Ideal para una rutina calmante. Se recomienda cuando la piel se siente reactiva, tirante o con rojeces después de la limpieza.</p>
+        <div class="review-person"><div class="review-avatar">CS</div><div><div class="review-name">Uso recomendado</div><div class="review-meta">Piel sensible · rutina calmante</div></div></div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-product">Celimax · Pore + Dark Spot</div>
+        <p class="review-text">Buena opción para quienes buscan luminosidad, tono más uniforme y apoyo en zonas con marcas o aspecto apagado.</p>
+        <div class="review-person"><div class="review-avatar">GL</div><div><div class="review-name">Uso recomendado</div><div class="review-meta">Manchas · glow · textura</div></div></div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-product">Dr Althea · 345 Relief Cream</div>
+        <p class="review-text">Recomendada como paso final para sellar hidratación y reforzar la barrera cutánea sin sensación pesada.</p>
+        <div class="review-person"><div class="review-avatar">HB</div><div><div class="review-name">Uso recomendado</div><div class="review-meta">Barrera · hidratación · confort</div></div></div>
+      </article>
+    </div>
+
+    <div class="use-grid reveal">
+      <div class="use-card"><div class="use-num">01</div><div class="use-title">Piel grasa</div><div class="use-desc">Limpieza suave, control de brillo, sérum ligero y protector solar mate.</div></div>
+      <div class="use-card"><div class="use-num">02</div><div class="use-title">Piel seca</div><div class="use-desc">Tónico hidratante, sérum humectante y crema nutritiva para sellar.</div></div>
+      <div class="use-card"><div class="use-num">03</div><div class="use-title">Piel sensible</div><div class="use-desc">Centella, fórmulas calmantes y crema barrera para reducir incomodidad.</div></div>
+      <div class="use-card"><div class="use-num">04</div><div class="use-title">Manchas / glow</div><div class="use-desc">Rutina enfocada en luminosidad, tono uniforme y textura más suave.</div></div>
+    </div>
   </div>
 </section>
 

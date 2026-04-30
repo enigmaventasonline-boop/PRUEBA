@@ -40,7 +40,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* ── MOBILE STICKY BAR ── */
 .mobile-sticky-bar{
-  display:none;
+  display:none;           /* oculto en desktop */
   position:fixed;
   bottom:0;left:0;right:0;
   z-index:190;
@@ -49,20 +49,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   gap:10px;
   box-shadow:0 -6px 24px rgba(44,36,32,.18);
   padding-bottom:max(16px, env(safe-area-inset-bottom));
+  transform:translateY(110%);   /* empieza fuera de pantalla */
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mobile-sticky-bar.visible{
+  transform:translateY(0);      /* entra al agregar producto */
 }
 .msb-cart{
   flex:1;background:var(--rose);color:#fff;border:none;border-radius:12px;
-  padding:14px;font-size:13px;font-weight:700;letter-spacing:.04em;
+  padding:14px;font-size:14px;font-weight:700;letter-spacing:.04em;
   cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;
   transition:background .2s;
 }
 .msb-cart:hover{background:#c97c25}
-.msb-wa{
-  width:50px;height:50px;border-radius:12px;background:var(--wa);color:#fff;
-  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:background .2s;
-}
-.msb-wa svg{width:24px;height:24px}
 
 /* ── HERO ── */
 .hero{min-height:100vh;background:linear-gradient(128deg,#F5EDE6 0%,#EDE0D4 42%,#DECCC0 100%);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:110px 40px 60px;position:relative;overflow:hidden}
@@ -76,9 +75,9 @@ h1.hero-title em{font-style:italic;color:var(--rose)}
 .hero-stat{background:rgba(255,255,255,.66);border:1px solid rgba(66,69,48,.10);border-radius:14px;padding:12px 14px}
 .hero-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1;color:var(--deep);font-weight:700}
 .hero-stat span{display:block;margin-top:4px;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.hero-seals{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.hero-seal{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:rgba(66,69,48,.08);color:var(--deep);font-size:10px;font-weight:600}
-.hero-seal span{width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--deep);color:#fff;font-size:10px}
+.hero-seals{display:flex;flex-wrap:nowrap;gap:6px;margin-bottom:24px;align-items:center}
+.hero-seal{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:rgba(66,69,48,.08);color:var(--deep);font-size:10px;font-weight:600;white-space:nowrap}
+.hero-seal span{width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--deep);color:#fff;font-size:9px;flex-shrink:0}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{background:var(--deep);color:var(--white);padding:14px 28px;border-radius:40px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all .3s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-block}
 .btn-primary:hover{background:var(--rose);transform:translateY(-2px);box-shadow:0 10px 26px rgba(212,168,154,.4)}
@@ -96,18 +95,39 @@ h1.hero-title em{font-style:italic;color:var(--rose)}
 .hero-mini-chart{display:flex;align-items:end;gap:3px;width:32px;height:32px;padding:5px;border-radius:9px;background:rgba(224,145,50,.12)}
 .hero-mini-chart span{display:block;width:6px;border-radius:6px;background:var(--rose)}
 
-/* ── BRANDS ── */
-.brands{padding:38px 24px;background:var(--white);border-bottom:1px solid var(--blush);text-align:center}
-.brands-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.brands-row{display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap}
-.bi{opacity:.55;transition:opacity .25s,transform .25s;cursor:pointer}
-.bi:hover{opacity:1;transform:translateY(-2px) scale(1.06)}
-.bn{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);transition:color .25s}
-.bi:hover .bn{color:var(--rose)}
+/* ── BRANDS MARQUEE ── */
+.brands{padding:28px 0;background:var(--white);border-bottom:1px solid var(--blush);overflow:hidden}
+.brands-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;text-align:center}
+.brands-track-wrap{position:relative;overflow:hidden;width:100%}
+/* fade edges */
+.brands-track-wrap::before,
+.brands-track-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.brands-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent)}
+.brands-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent)}
+.brands-track{
+  display:flex;align-items:center;gap:0;
+  width:max-content;
+  animation:brandScroll 28s linear infinite;
+}
+.brands-track:hover{animation-play-state:paused}
+@keyframes brandScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.brand-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:0 32px;cursor:pointer;opacity:.55;transition:opacity .25s;
+  border-right:1px solid rgba(44,36,32,.07);white-space:nowrap;
+}
+.brand-item:hover{opacity:1}
+.brand-item:last-child{border-right:none}
+.bn{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);transition:color .2s}
+.brand-item:hover .bn{color:var(--rose)}
 .bn.it{font-style:italic;letter-spacing:.04em;font-size:19px}
 .bn.sm{font-size:11px;letter-spacing:.26em}
-.bs{font-size:8px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
-.dv{width:1px;height:28px;background:rgba(44,36,32,.08)}
+.bs{font-size:8px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-top:2px}
 
 /* ── SECTION COMMON ── */
 .sh{text-align:center;margin-bottom:40px}
@@ -334,7 +354,7 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   .nav-links{display:none}
   .logo{font-size:16px}
 
-  /* Sticky bar visible */
+  /* Sticky bar visible en mobile (empieza oculta, JS la muestra) */
   .mobile-sticky-bar{display:flex}
 
   /* Hero mobile: columna única, imagen visible y pequeña */
@@ -351,7 +371,8 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   .hero-stat{padding:10px 8px;border-radius:12px}
   .hero-stat strong{font-size:20px}
   .hero-stat span{font-size:8px}
-  .hero-seals{justify-content:center}
+  .hero-seals{justify-content:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .hero-seals::-webkit-scrollbar{display:none}
   .hero-btns{justify-content:center}
 
   /* Hero visual: mostrar imagen en mobile con altura reducida */
@@ -362,8 +383,7 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
 
   /* Brands */
   .brands{padding:28px 14px}
-  .brands-row{gap:14px}
-  .dv{display:none}
+  /* brands: en mobile el marquee ya es responsive */
   .bn{font-size:13px}
 
   /* Filtros: scroll horizontal */
@@ -449,13 +469,10 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   </div>
 </nav>
 
-<!-- MOBILE STICKY BAR -->
+<!-- MOBILE STICKY BAR — solo aparece al agregar el primer producto -->
 <div class="mobile-sticky-bar" id="mobileStickyBar">
   <button class="msb-cart" onclick="toggleCart()">
     🛒 Ver pedido (<span id="msbCount">0</span>)
-  </button>
-  <button class="msb-wa" onclick="window.open('https://wa.me/56928775107','_blank')" title="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </button>
 </div>
 
@@ -516,21 +533,30 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   </div>
 </section>
 
-<!-- BRANDS -->
+<!-- BRANDS MARQUEE -->
 <section class="brands">
   <div class="brands-label">Marcas disponibles en Enigma Store</div>
-  <div class="brands-row">
-    <div class="bi" onclick="filterByBrand('SKIN1004')" title="SKIN1004"><div class="bn sm">SKIN1004</div><div class="bs">The Untouched Nature</div></div>
-    <div class="dv"></div>
-    <div class="bi" onclick="filterByBrand('Dr Althea')" title="Dr Althea"><div class="bn it">Dr.Althea</div><div class="bs">Derma K-Beauty</div></div>
-    <div class="dv"></div>
-    <div class="bi" onclick="filterByBrand('Celimax')" title="Celimax"><div class="bn">celimax</div><div class="bs">Noni Extract</div></div>
-    <div class="dv"></div>
-    <div class="bi" onclick="filterByBrand('Medicube')" title="Medicube"><div class="bn" style="font-size:14px;letter-spacing:.06em">Medicube</div><div class="bs">Advanced Skincare</div></div>
-    <div class="dv"></div>
-    <div class="bi" onclick="filterByBrand('Beauty of Joseon')" title="Beauty of Joseon"><div class="bn" style="font-size:13px">Beauty of Joseon</div><div class="bs">Traditional K-Beauty</div></div>
-    <div class="dv"></div>
-    <div class="bi" onclick="filterByBrand('Mixsoon')" title="Mixsoon"><div class="bn">Mixsoon</div><div class="bs">Bean Fermented</div></div>
+  <div class="brands-track-wrap">
+    <div class="brands-track" id="brandsTrack">
+      <!-- Set 1 -->
+      <div class="brand-item" onclick="filterByBrand('SKIN1004')"><div class="bn sm">SKIN1004</div><div class="bs">The Untouched Nature</div></div>
+      <div class="brand-item" onclick="filterByBrand('Dr Althea')"><div class="bn it">Dr.Althea</div><div class="bs">Derma K-Beauty</div></div>
+      <div class="brand-item" onclick="filterByBrand('Celimax')"><div class="bn">celimax</div><div class="bs">Noni Extract</div></div>
+      <div class="brand-item" onclick="filterByBrand('Medicube')"><div class="bn" style="font-size:14px;letter-spacing:.06em">Medicube</div><div class="bs">Advanced Skincare</div></div>
+      <div class="brand-item" onclick="filterByBrand('Beauty of Joseon')"><div class="bn" style="font-size:13px">Beauty of Joseon</div><div class="bs">Traditional K-Beauty</div></div>
+      <div class="brand-item" onclick="filterByBrand('Mixsoon')"><div class="bn">Mixsoon</div><div class="bs">Bean Fermented</div></div>
+      <div class="brand-item" onclick="filterByBrand('Elizavecca')"><div class="bn" style="font-size:13px;letter-spacing:.08em">Elizavecca</div><div class="bs">K-Beauty Lab</div></div>
+      <div class="brand-item" onclick="filterByBrand('Round Lab')"><div class="bn" style="font-size:14px">Round Lab</div><div class="bs">Mineral Skincare</div></div>
+      <!-- Set 2 — clon para bucle infinito -->
+      <div class="brand-item" onclick="filterByBrand('SKIN1004')"><div class="bn sm">SKIN1004</div><div class="bs">The Untouched Nature</div></div>
+      <div class="brand-item" onclick="filterByBrand('Dr Althea')"><div class="bn it">Dr.Althea</div><div class="bs">Derma K-Beauty</div></div>
+      <div class="brand-item" onclick="filterByBrand('Celimax')"><div class="bn">celimax</div><div class="bs">Noni Extract</div></div>
+      <div class="brand-item" onclick="filterByBrand('Medicube')"><div class="bn" style="font-size:14px;letter-spacing:.06em">Medicube</div><div class="bs">Advanced Skincare</div></div>
+      <div class="brand-item" onclick="filterByBrand('Beauty of Joseon')"><div class="bn" style="font-size:13px">Beauty of Joseon</div><div class="bs">Traditional K-Beauty</div></div>
+      <div class="brand-item" onclick="filterByBrand('Mixsoon')"><div class="bn">Mixsoon</div><div class="bs">Bean Fermented</div></div>
+      <div class="brand-item" onclick="filterByBrand('Elizavecca')"><div class="bn" style="font-size:13px;letter-spacing:.08em">Elizavecca</div><div class="bs">K-Beauty Lab</div></div>
+      <div class="brand-item" onclick="filterByBrand('Round Lab')"><div class="bn" style="font-size:14px">Round Lab</div><div class="bs">Mineral Skincare</div></div>
+    </div>
   </div>
 </section>
 
@@ -542,7 +568,7 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
     <p class="ssub">Agrega al carrito y ve directo al checkout seguro en enigmastore.cl 🛒</p>
   </div>
   <div class="tabs reveal" id="tabsContainer"></div>
-  <div class="pgrid reveal" id="pgrid"></div>
+  <div class="pgrid" id="pgrid"></div>
   <div class="view-more-wrap reveal">
     <a href="https://enigmastore.cl/collections/belleza" target="_blank" class="btn-ghost" style="margin-top:8px">Ver los 57 productos →</a>
   </div>
@@ -1088,7 +1114,13 @@ function updateCartUI(){
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const count=cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cartBadge').textContent=count;
-  // Actualizar sticky mobile
+  // Sticky bar: mostrar solo cuando hay items
+  const bar=document.getElementById('mobileStickyBar');
+  if(bar){
+    if(count>0){ bar.classList.add('visible') }
+    else { bar.classList.remove('visible') }
+  }
+  // Actualizar contador sticky
   const msbCount=document.getElementById('msbCount');
   if(msbCount) msbCount.textContent=count;
   const items=document.getElementById('ditems');
@@ -1255,8 +1287,9 @@ document.addEventListener('keydown',e=>{
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded',()=>{
   renderTabs();
-  renderProds('all');
+  renderProds('all');   // carga inmediata, sin esperar scroll
   initCounters();
+  // Reveal: solo para secciones que NO sean el grid de productos
   document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 });
 </script>

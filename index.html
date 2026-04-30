@@ -648,7 +648,7 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
       <h3>¡Listo, <span id="klSuccessName">amiga</span>!</h3>
       <p>Tu cupón de 10% está listo. Úsalo en tu próxima compra en enigmastore.cl</p>
       <div class="kl-coupon-box">
-        <div class="kl-coupon-code" id="klCouponCode">KBEAUTY10</div>
+        <div class="kl-coupon-code" id="klCouponCode">BESTORE</div>
         <div class="kl-coupon-label">Código de descuento · Primera compra</div>
       </div>
       <button class="kl-copy-btn" onclick="copyCoupon()">📋 Copiar código</button>
@@ -862,9 +862,9 @@ let cart = [];
    Reemplaza LIST_ID con tu list ID real de Klaviyo
    y COMPANY_ID con tu Public API Key (pk_...)
    ─────────────────────────────────────────────── */
-const KL_LIST_ID    = 'TU_LIST_ID_AQUI';     // ej: 'WmXab2'
-const KL_COMPANY_ID = 'TU_PUBLIC_KEY_AQUI';  // ej: 'pk_abc123...'
-const KL_COUPON     = 'KBEAUTY10';           // cupón que ya tienes creado en Shopify
+const KL_LIST_ID    = 'Tb7x9k';   // Email List — Enigma Store
+const KL_COMPANY_ID = 'SCmJRc';   // Clave pública Enigma Store Chile SpA
+const KL_COUPON     = 'BESTORE';           // cupón que ya tienes creado en Shopify
 
 async function submitKlaviyo(){
   const emailEl = document.getElementById('klEmail');

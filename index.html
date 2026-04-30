@@ -357,29 +357,86 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   /* Sticky bar visible en mobile (empieza oculta, JS la muestra) */
   .mobile-sticky-bar{display:flex}
 
-  /* Hero mobile: columna única, imagen visible y pequeña */
+  /* ── HERO MOBILE: VERSIÓN A (imagen arriba, texto abajo) ── */
   .hero{
-    grid-template-columns:1fr;
-    padding:86px 16px 100px;  /* espacio para sticky bar */
-    text-align:center;
-    gap:24px;
+    display:flex;
+    flex-direction:column;
+    padding:0;
     min-height:auto;
+    gap:0;
+    background:transparent;
   }
-  h1.hero-title{font-size:clamp(40px,10vw,60px);line-height:.96}
-  .hero-sub{margin-left:auto;margin-right:auto;font-size:13px}
-  .hero-stats{grid-template-columns:repeat(3,1fr);gap:7px;margin-left:auto;margin-right:auto}
-  .hero-stat{padding:10px 8px;border-radius:12px}
-  .hero-stat strong{font-size:20px}
-  .hero-stat span{font-size:8px}
-  .hero-seals{justify-content:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .hero-seals::-webkit-scrollbar{display:none}
-  .hero-btns{justify-content:center}
+  .hero::after{display:none}
 
-  /* Hero visual: mostrar imagen en mobile con altura reducida */
-  .hero-right{display:flex;min-height:auto;justify-content:center}
-  .hero-product-card{height:260px;border-radius:20px;width:min(300px,90vw)}
-  .hero-product-card img{padding:8px;object-position:center 10%}
-  .hero-floating-card{display:none} /* floating cards no caben */
+  /* Imagen: ocupa el ancho completo, va PRIMERA (order) */
+  .hero-right{
+    order:-1;
+    display:flex;
+    width:100%;
+    min-height:auto;
+    justify-content:center;
+    position:relative;
+    background:linear-gradient(150deg,#DEC8BE 0%,#C4A090 45%,#8A6458 100%);
+    padding-top:56px; /* altura nav */
+  }
+  .hero-product-card{
+    width:100%;
+    height:260px;
+    border-radius:0;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    position:relative;
+  }
+  .hero-product-card img{
+    padding:0;
+    object-fit:contain;
+    object-position:center bottom;
+    filter:drop-shadow(0 16px 28px rgba(44,36,32,.22));
+  }
+
+  /* Badge cupón flotante sobre la imagen */
+  .hero-floating-card{display:none}
+  .hero-coupon-badge{
+    display:flex !important;
+    position:absolute;
+    top:68px;right:14px;
+    background:rgba(255,255,255,.92);
+    border-radius:11px;padding:8px 11px;
+    box-shadow:0 8px 24px rgba(44,36,32,.14);
+    flex-direction:column;
+    z-index:4;
+  }
+  .hcb-top{font-family:'DM Sans',sans-serif;font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#E09132;font-weight:700;margin-bottom:1px}
+  .hcb-val{font-family:'Cormorant Garamond',serif;font-size:18px;color:#424530;line-height:1.1}
+  .hcb-sub{font-family:'DM Sans',sans-serif;font-size:7px;color:#A58E74}
+
+  /* Texto: debajo de la imagen, fondo crema */
+  .hero-left{
+    order:1;
+    background:#F5EDE6;
+    padding:22px 18px 108px; /* 108px = sticky bar space */
+    text-align:left;
+  }
+  .hero-tag{margin-bottom:12px;font-size:9px}
+  h1.hero-title{font-size:clamp(34px,9vw,48px);line-height:.95;margin-bottom:10px}
+  .hero-sub{margin:0 0 16px;font-size:12px;max-width:100%}
+
+  .hero-stats{
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-bottom:14px;
+  }
+  .hero-stat{padding:9px 7px;border-radius:11px;background:rgba(255,255,255,.7)}
+  .hero-stat strong{font-size:18px}
+  .hero-stat span{font-size:7px}
+
+  .hero-seals{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:18px}
+  .hero-seals::-webkit-scrollbar{display:none}
+
+  .hero-btns{justify-content:flex-start;gap:9px}
+  .hero-btns .btn-primary{padding:12px 22px;font-size:11px}
+  .hero-btns .btn-ghost{padding:11px 18px;font-size:11px}
 
   /* Brands */
   .brands{padding:28px 14px}
@@ -511,6 +568,12 @@ footer{background:#1A1210;color:rgba(255,255,255,.42);padding:44px 24px 26px}
   </div>
 
   <div class="hero-right">
+    <!-- Badge cupón — solo visible en mobile vía CSS -->
+    <div class="hero-coupon-badge" style="display:none">
+      <div class="hcb-top">10% off</div>
+      <div class="hcb-val">BESTORE</div>
+      <div class="hcb-sub">primera compra</div>
+    </div>
     <div class="hero-product-card">
       <img src="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKIncare_Coreano_original.png?v=1777427752"
            alt="Skincare coreano original Enigma Store"

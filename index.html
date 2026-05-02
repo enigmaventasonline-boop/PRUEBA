@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-Beauty Chile — Enigma Store</title>
+<title>K-Beauty Chile — Skincare Coreano Original | Enigma Store</title>
+
+<!-- SEO -->
+<meta name="description" content="Skincare coreano original en Chile. Celimax, Mixsoon, SKIN1004, Dr Althea, Beauty of Joseon y más. Importado desde Corea · Despacho a todo Chile · Compra segura.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://skincare.enigmastore.cl/">
+
+<!-- Open Graph — redes sociales -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://skincare.enigmastore.cl/">
+<meta property="og:title" content="K-Beauty Chile — Skincare Coreano Original | Enigma Store">
+<meta property="og:description" content="Rutinas coreanas seleccionadas para hidratar, iluminar y fortalecer tu piel. Productos originales con despacho a todo Chile.">
+<meta property="og:image" content="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKINCARE_CELIMAX_CHILE.png?v=1777687987">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="Enigma Store Chile">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="K-Beauty Chile — Skincare Coreano Original | Enigma Store">
+<meta name="twitter:description" content="Rutinas coreanas seleccionadas para hidratar, iluminar y fortalecer tu piel. Despacho a todo Chile.">
+<meta name="twitter:image" content="https://cdn.shopify.com/s/files/1/0609/5496/8134/files/SKINCARE_CELIMAX_CHILE.png?v=1777687987">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -660,6 +680,10 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:56px 40px 28px}
 .hero-bg{
   animation:marqueeKen 18s ease-in-out infinite;
   transform-origin:center center;
+  will-change:transform;
+}
+@media(max-width:900px){
+  .hero-bg{animation:none} /* desactiva Ken Burns en mobile — ahorra GPU */
 }
 /* Eyebrow entra primero */
 .hero-eyebrow{
@@ -818,6 +842,154 @@ nav{
   animation:shimmer 2.5s ease-in-out 1s infinite;
 }
 
+/* ══════════════════════════════════════
+   DELIGHT — personalidad y momentos únicos
+══════════════════════════════════════ */
+
+/* ── Cursor personalizado en productos ── */
+.pimg-wrap{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231a1a18' fill-opacity='.85'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='14' fill='white'%3E%2B%3C/text%3E%3C/svg%3E") 16 16, pointer}
+
+/* ── Hero eyebrow — línea animada ── */
+.hero-eyebrow::before{
+  content:'';display:block;width:22px;height:1px;
+  background:rgba(255,255,255,.4);
+  animation:lineGrow .8s cubic-bezier(.16,1,.3,1) .4s both;
+}
+@keyframes lineGrow{
+  from{width:0;opacity:0}
+  to{width:22px;opacity:1}
+}
+
+/* ── Producto card — esquina de marca ── */
+.pbrand{
+  position:relative;
+  display:inline-block;
+}
+.pbrand::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:1px;background:var(--rose);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.pc:hover .pbrand::after{transform:scaleX(1)}
+
+/* ── Add button — ripple effect ── */
+.add-btn{position:relative;overflow:hidden}
+.add-btn::after{
+  content:'';position:absolute;inset:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
+  transform:scale(0);opacity:1;
+  transition:transform .4s ease,opacity .4s ease;
+}
+.add-btn:active::after{transform:scale(2.5);opacity:0}
+
+/* ── Trust items — icono con glow ── */
+.trust-icon{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.trust-item:hover .trust-icon{transform:scale(1.3)}
+
+/* ── Marquee chip — hover revela subtítulo ── */
+.bc-sub{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .3s ease,opacity .3s ease,margin .3s ease;
+  margin-top:0;
+}
+.brand-chip:hover .bc-sub{max-height:20px;opacity:1;margin-top:2px}
+
+/* ── Review stars — shimmer al hover ── */
+.rev-stars{
+  display:inline-block;
+  transition:letter-spacing .3s ease;
+}
+.rev-card:hover .rev-stars{letter-spacing:.12em}
+
+/* ── Filter btn — fondo que crece desde centro ── */
+.filter-btn{
+  position:relative;overflow:hidden;
+}
+.filter-btn::before{
+  content:'';position:absolute;inset:0;
+  background:var(--ink);border-radius:40px;
+  transform:scale(0);transition:transform .25s cubic-bezier(.34,1.26,.64,1);
+  z-index:0;
+}
+.filter-btn.on::before,.filter-btn:hover::before{transform:scale(1)}
+.filter-btn span,.filter-btn{position:relative;z-index:1}
+
+/* ── Carrito vacío — emoji flota ── */
+.d-empty .ei{
+  display:inline-block;
+  animation:eiFloat 2.5s ease-in-out infinite;
+}
+@keyframes eiFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  30%{transform:translateY(-8px) rotate(-5deg)}
+  60%{transform:translateY(-4px) rotate(3deg)}
+}
+
+/* ── Drawer total — highlight al cambiar ── */
+.d-total-amt{
+  transition:color .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.d-total-amt.bump{
+  animation:totalBump .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes totalBump{
+  0%{transform:scale(1);color:var(--ink)}
+  40%{transform:scale(1.18);color:var(--rose)}
+  100%{transform:scale(1);color:var(--ink)}
+}
+
+/* ── Announce bar — texto con shimmer sutil ── */
+.announce{
+  position:relative;overflow:hidden;
+}
+.announce::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  animation:announceShine 4s ease-in-out 2s infinite;
+}
+@keyframes announceShine{
+  0%{left:-60%}
+  100%{left:120%}
+}
+
+/* ── Popup close — gira al hover ── */
+.popup-close{
+  transition:background .2s ease,color .2s ease,transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.popup-close:hover{
+  background:var(--ink);color:#fff;
+  transform:rotate(90deg) scale(1.1);
+}
+
+/* ── Footer logo — brillo sutil al hover ── */
+.f-logo{
+  position:relative;
+  transition:color .25s ease,letter-spacing .3s ease;
+}
+.f-logo:hover{
+  color:#fff;
+  letter-spacing:.1em;
+}
+
+/* ── WA float — tooltip al hover ── */
+.wa-float{position:relative}
+.wa-float::before{
+  content:'¿Necesitas ayuda?';
+  position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%) translateX(4px);
+  background:var(--ink);color:#fff;
+  font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.06em;
+  padding:6px 12px;border-radius:20px;white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .25s cubic-bezier(.16,1,.3,1);
+}
+.wa-float:hover::before{opacity:1;transform:translateY(-50%) translateX(0)}
+
 /* ── Announce bar — shimmer sutil ── */
 .announce{
   background-size:200% 100%;
@@ -931,9 +1103,9 @@ nav{
     <span class="logo-sub">K-Beauty Chile</span>
   </a>
   <div class="nav-right">
-    <button class="nav-icon-btn" onclick="toggleCart()">
+    <button class="nav-icon-btn" onclick="toggleCart()" aria-label="Abrir carrito de compras">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      <span id="cartBadge" class="cart-badge">0</span>
+      <span id="cartBadge" class="cart-badge" aria-label="productos en carrito">0</span>
     </button>
   </div>
 </nav>
@@ -1070,8 +1242,8 @@ nav{
         <div class="rf-title">Recomienda mi rutina</div>
         <p class="rf-desc">Completa tus datos y te mostramos los productos exactos para tu piel.</p>
         <div class="rf-grid">
-          <input id="clientName" class="rf-input" type="text" placeholder="Tu nombre">
-          <select id="skinType" class="rf-input">
+          <input id="clientName" class="rf-input" type="text" placeholder="Tu nombre" aria-label="Tu nombre">
+          <select id="skinType" class="rf-input" aria-label="Tipo de piel">
             <option value="">Tipo de piel</option>
             <option value="grasa">Grasa</option>
             <option value="seca">Seca</option>
@@ -1080,14 +1252,14 @@ nav{
             <option value="acne">Acneica</option>
             <option value="manchas">Manchas / tono apagado</option>
           </select>
-          <select id="ageRange" class="rf-input">
+          <select id="ageRange" class="rf-input" aria-label="Rango de edad">
             <option value="">Edad</option>
             <option value="18-25">18–25</option>
             <option value="26-35">26–35</option>
             <option value="36-45">36–45</option>
             <option value="45+">45+</option>
           </select>
-          <select id="skinGoal" class="rf-input">
+          <select id="skinGoal" class="rf-input" aria-label="Objetivo de skincare">
             <option value="">Objetivo</option>
             <option value="hidratacion">Hidratación</option>
             <option value="glow">Glow / luminosidad</option>
@@ -1241,7 +1413,7 @@ nav{
 </div>
 
 <!-- POPUP -->
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)" role="dialog" aria-modal="true" aria-labelledby="popupName">
   <div class="popup" id="popupBox">
     <div class="popup-img" id="popupImg">
       <img id="popupImgSrc" src="" alt="" loading="lazy">
@@ -1506,6 +1678,12 @@ function updateCartUI(){
     `).join('');
     foot.style.display='block';
     document.getElementById('dtotal').textContent=fmt(total);
+    /* delight — total hace bump al cambiar */
+    const totalEl=document.getElementById('dtotal');
+    totalEl.classList.remove('bump');
+    void totalEl.offsetWidth;
+    totalEl.classList.add('bump');
+    setTimeout(()=>totalEl.classList.remove('bump'),400);
   }
 }
 function toggleCart(){
